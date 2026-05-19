@@ -14,15 +14,13 @@
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:#111827; color:var(--white); font-family:'Lato',sans-serif; min-height:100vh; }
 
-  /* LOGIN */
   #login-screen {
     min-height:100vh; display:flex; align-items:center; justify-content:center;
     background: var(--blu);
   }
   .login-box {
     background: var(--blu2); padding:48px; border-radius:12px;
-    border:1px solid rgba(200,168,75,0.3);
-    width:360px; text-align:center;
+    border:1px solid rgba(200,168,75,0.3); width:360px; text-align:center;
   }
   .login-box h1 { font-family:'Bebas Neue'; font-size:32px; letter-spacing:3px; color:var(--gold); margin-bottom:8px; }
   .login-box p { color:var(--gray); font-size:13px; margin-bottom:32px; }
@@ -40,7 +38,6 @@
   .btn-gold:hover { background:#d4b35a; }
   #login-error { color:var(--red); font-size:13px; margin-top:12px; min-height:20px; }
 
-  /* MAIN APP */
   #app { display:none; min-height:100vh; }
   nav {
     background:var(--blu2); border-bottom:2px solid var(--gold);
@@ -48,16 +45,10 @@
   }
   .nav-title { font-family:'Bebas Neue'; font-size:24px; letter-spacing:3px; color:var(--gold); }
   .nav-title span { color:var(--gray); font-size:14px; font-family:'Lato'; letter-spacing:1px; }
-  .btn-sm {
-    padding:8px 18px; border-radius:6px; border:none; cursor:pointer;
-    font-weight:700; font-size:13px; letter-spacing:1px;
-  }
+  .btn-sm { padding:8px 18px; border-radius:6px; border:none; cursor:pointer; font-weight:700; font-size:13px; letter-spacing:1px; }
   .btn-danger { background:var(--red); color:#fff; }
-  .btn-danger:hover { background:#c0392b; }
 
   main { padding:32px; max-width:960px; margin:0 auto; }
-
-  /* TICKER */
   .section { margin-bottom:40px; }
   .section-title {
     font-family:'Bebas Neue'; font-size:22px; letter-spacing:2px;
@@ -70,59 +61,70 @@
   }
   .ticker-row input:focus { border-color:var(--gold); }
   .btn-save { background:var(--green); color:#fff; }
-  .btn-save:hover { background:#27ae60; }
 
-  /* SLIDE CARDS */
   #slides-list { display:grid; gap:16px; }
   .slide-card {
     background:#1a2233; border-radius:10px; border:1px solid #334;
-    padding:20px; display:flex; gap:20px; align-items:flex-start;
+    padding:20px; display:flex; gap:16px; align-items:flex-start;
   }
   .slide-card.inactive { opacity:0.5; }
-  .slide-info { flex:1; }
-  .slide-info .s-type {
-    font-size:10px; letter-spacing:3px; text-transform:uppercase;
-    color:var(--gold); margin-bottom:6px;
+  .slide-thumb {
+    width:80px; height:60px; border-radius:6px; object-fit:cover;
+    background:#223; flex-shrink:0; display:flex; align-items:center;
+    justify-content:center; font-size:24px; overflow:hidden;
   }
-  .slide-info .s-title { font-weight:700; font-size:17px; margin-bottom:4px; }
-  .slide-info .s-body { color:var(--gray); font-size:13px; }
-  .slide-actions { display:flex; flex-direction:column; gap:8px; }
-  .btn-icon {
-    width:36px; height:36px; border-radius:6px; border:none; cursor:pointer;
-    font-size:16px; display:flex; align-items:center; justify-content:center;
-  }
+  .slide-thumb img { width:100%; height:100%; object-fit:cover; }
+  .slide-info { flex:1; min-width:0; }
+  .slide-info .s-type { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+  .slide-info .s-title { font-weight:700; font-size:16px; margin-bottom:4px; }
+  .slide-info .s-body { color:var(--gray); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .slide-actions { display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
+  .btn-icon { width:36px; height:36px; border-radius:6px; border:none; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; }
   .btn-toggle { background:#334; color:var(--white); }
   .btn-del { background:var(--red); color:#fff; }
-  .btn-up, .btn-dn { background:#223; color:var(--gray); }
 
-  /* MODAL */
   #modal-overlay {
     display:none; position:fixed; inset:0;
-    background:rgba(0,0,0,0.7); z-index:100;
-    align-items:center; justify-content:center;
+    background:rgba(0,0,0,0.85); z-index:100;
+    align-items:flex-start; justify-content:center;
+    overflow-y:auto; padding:24px 12px;
   }
   #modal-overlay.open { display:flex; }
   .modal {
     background:#1a2233; border-radius:12px; border:1px solid var(--gold);
-    padding:32px; width:520px; max-width:95vw;
+    padding:28px; width:520px; max-width:100%; margin:auto;
   }
-  .modal h3 { font-family:'Bebas Neue'; font-size:24px; letter-spacing:2px; margin-bottom:24px; color:var(--gold); }
-  .form-group { margin-bottom:16px; }
-  .form-group label { display:block; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-bottom:6px; }
+  .modal h3 { font-family:'Bebas Neue'; font-size:24px; letter-spacing:2px; margin-bottom:20px; color:var(--gold); }
+  .form-group { margin-bottom:14px; }
+  .form-group label { display:block; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-bottom:5px; }
   .form-group input, .form-group select, .form-group textarea {
     width:100%; padding:10px 14px; background:#111827; border:1px solid #334;
     border-radius:8px; color:var(--white); font-size:14px; font-family:'Lato'; outline:none;
   }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--gold); }
-  .form-group textarea { resize:vertical; height:80px; }
+  .form-group textarea { resize:vertical; height:72px; }
   .form-group select option { background:#1a2233; }
-  .modal-footer { display:flex; gap:12px; justify-content:flex-end; margin-top:24px; }
+  .modal-footer { display:flex; gap:12px; justify-content:flex-end; margin-top:20px; }
   .btn-cancel { background:#334; color:var(--white); }
 
-  .type-fields { display:none; }
-  .type-fields.visible { display:block; }
+  /* UPLOAD */
+  #upload-area {
+    border:2px dashed #445; border-radius:10px; padding:20px;
+    text-align:center; cursor:pointer; transition:border-color 0.2s, background 0.2s;
+    min-height:100px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:8px;
+  }
+  #upload-area:hover { border-color:var(--gold); background:rgba(200,168,75,0.05); }
+  #upload-placeholder { color:var(--gray); font-size:14px; }
+  #upload-placeholder .pu-icon { font-size:28px; display:block; margin-bottom:4px; }
+  #upload-preview { display:none; max-width:100%; max-height:130px; border-radius:6px; }
+  .prog-wrap { display:none; width:100%; }
+  .prog-bar { height:4px; background:#334; border-radius:2px; overflow:hidden; }
+  .prog-fill { height:100%; background:var(--gold); width:0%; transition:width 0.3s; }
+  .prog-label { font-size:12px; color:var(--gold); margin-top:5px; }
+  #upload-ok { display:none; color:var(--green); font-weight:700; font-size:13px; }
+  #url-preview { font-size:10px; color:#556; word-break:break-all; margin-top:6px; display:none; }
 
-  /* ADD BUTTON */
   #btn-add-slide {
     width:100%; padding:16px; background:rgba(200,168,75,0.1);
     border:2px dashed var(--gold); border-radius:10px; color:var(--gold);
@@ -131,10 +133,7 @@
   }
   #btn-add-slide:hover { background:rgba(200,168,75,0.2); }
 
-  .badge {
-    display:inline-block; padding:2px 10px; border-radius:20px;
-    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
-  }
+  .badge { display:inline-block; padding:2px 10px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
   .badge-text { background:#334; color:var(--gray); }
   .badge-image { background:#1a3a5c; color:#5bb8ff; }
   .badge-video { background:#3a1a1a; color:#ff7070; }
@@ -142,8 +141,7 @@
   #toast {
     position:fixed; bottom:24px; right:24px;
     background:var(--green); color:#fff;
-    padding:12px 24px; border-radius:8px;
-    font-weight:700; font-size:14px; letter-spacing:1px;
+    padding:12px 24px; border-radius:8px; font-weight:700; font-size:14px;
     transform:translateY(80px); opacity:0; transition:all 0.3s;
     pointer-events:none; z-index:200;
   }
@@ -152,7 +150,6 @@
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <h1>LABRIOLA</h1>
@@ -164,26 +161,19 @@
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <nav>
-    <div>
-      <div class="nav-title">LABRIOLA SIGNAGE <span>· Admin</span></div>
-    </div>
+    <div class="nav-title">LABRIOLA SIGNAGE <span>· Admin</span></div>
     <button class="btn-sm btn-danger" onclick="doLogout()">Esci</button>
   </nav>
-
   <main>
-    <!-- TICKER -->
     <div class="section">
       <div class="section-title">📢 Ticker (fascia in basso)</div>
       <div class="ticker-row">
-        <input type="text" id="ticker-input" placeholder="Testo scorrevole in basso..." />
+        <input type="text" id="ticker-input" placeholder="Testo scorrevole..." />
         <button class="btn-sm btn-save" onclick="saveTicker()">Salva</button>
       </div>
     </div>
-
-    <!-- SLIDE -->
     <div class="section">
       <div class="section-title">🖼️ Slide</div>
       <div id="slides-list"></div>
@@ -192,10 +182,9 @@
   </main>
 </div>
 
-<!-- MODAL -->
 <div id="modal-overlay">
   <div class="modal">
-    <h3 id="modal-title">Nuova Slide</h3>
+    <h3>Nuova Slide</h3>
 
     <div class="form-group">
       <label>Tipo</label>
@@ -206,27 +195,44 @@
       </select>
     </div>
 
-    <div class="form-group type-fields" id="fields-text-image" style="display:block">
-      <label>Etichetta (tag)</label>
-      <input type="text" id="f-tag" placeholder="es. Evento, Comunicazione..." />
-    </div>
-    <div class="form-group type-fields" id="fields-text-image2" style="display:block">
-      <label>Titolo</label>
-      <input type="text" id="f-title" placeholder="Titolo principale" />
-    </div>
-    <div class="form-group type-fields" id="fields-text-image3" style="display:block">
-      <label>Testo</label>
-      <textarea id="f-body" placeholder="Descrizione o dettagli..."></textarea>
-    </div>
-
-    <div class="form-group type-fields" id="fields-image">
-      <label>URL Immagine</label>
-      <input type="text" id="f-imageUrl" placeholder="https://..." />
+    <div id="fields-text">
+      <div class="form-group">
+        <label>Etichetta</label>
+        <input type="text" id="f-tag" placeholder="es. Evento, Avviso..." />
+      </div>
+      <div class="form-group">
+        <label>Titolo</label>
+        <input type="text" id="f-title" placeholder="Titolo principale" />
+      </div>
+      <div class="form-group">
+        <label>Testo</label>
+        <textarea id="f-body" placeholder="Descrizione..."></textarea>
+      </div>
     </div>
 
-    <div class="form-group type-fields" id="fields-video">
+    <div class="form-group" id="fields-image" style="display:none">
+      <label>Immagine</label>
+      <div id="upload-area" onclick="document.getElementById('f-file').click()">
+        <div id="upload-placeholder">
+          <span class="pu-icon">📷</span>
+          Tocca per scegliere una foto
+        </div>
+        <img id="upload-preview" src="" alt="" />
+        <div class="prog-wrap" id="prog-wrap">
+          <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
+          <div class="prog-label" id="prog-label">Caricamento...</div>
+        </div>
+        <div id="upload-ok">✓ Immagine caricata!</div>
+      </div>
+      <input type="file" id="f-file" accept="image/*" style="display:none" onchange="doUpload(this)" />
+      <input type="hidden" id="f-imageUrl" />
+      <div id="url-preview"></div>
+    </div>
+
+    <div class="form-group" id="fields-video" style="display:none">
       <label>YouTube Video ID</label>
       <input type="text" id="f-youtubeId" placeholder="es. dQw4w9WgXcQ" />
+      <small style="color:var(--gray);font-size:11px;margin-top:4px;display:block">Parte dopo "v=" nell'URL</small>
     </div>
 
     <div class="form-group">
@@ -236,14 +242,13 @@
 
     <div class="modal-footer">
       <button class="btn-sm btn-cancel" onclick="closeModal()">Annulla</button>
-      <button class="btn-sm btn-gold" onclick="saveSlide()">Salva</button>
+      <button class="btn-sm btn-gold" id="btn-save" onclick="saveSlide()">Salva</button>
     </div>
   </div>
 </div>
 
-<div id="toast">✓ Salvato</div>
+<div id="toast"></div>
 
-<!-- Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getDatabase, ref, set, push, remove, onValue, update }
@@ -261,149 +266,199 @@
     appId: "1:406579948319:web:910abf919d89c7c4d99e2a"
   };
 
+  const CLOUD = 'dpjdgvydp';
+  const PRESET = 'supermarket_cards';
+
   const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+  const db  = getDatabase(app);
   const auth = getAuth(app);
 
   // AUTH
   window.doLogin = async () => {
-    const email = document.getElementById('email').value;
-    const pw = document.getElementById('password').value;
+    document.getElementById('login-error').textContent = '';
     try {
-      await signInWithEmailAndPassword(auth, email, pw);
-    } catch(e) {
-      document.getElementById('login-error').textContent = 'Credenziali non valide';
-    }
+      await signInWithEmailAndPassword(auth,
+        document.getElementById('email').value,
+        document.getElementById('password').value);
+    } catch { document.getElementById('login-error').textContent = 'Credenziali non valide'; }
   };
   window.doLogout = () => signOut(auth);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') doLogin();
+  });
 
-  onAuthStateChanged(auth, user => {
-    document.getElementById('login-screen').style.display = user ? 'none' : 'flex';
-    document.getElementById('app').style.display = user ? 'block' : 'none';
-    if (user) initData();
+  onAuthStateChanged(auth, u => {
+    document.getElementById('login-screen').style.display = u ? 'none' : 'flex';
+    document.getElementById('app').style.display = u ? 'block' : 'none';
+    if (u) init();
   });
 
   // TICKER
-  onValue(ref(db, 'signage/ticker'), snap => {
-    document.getElementById('ticker-input').value = snap.val() || '';
+  onValue(ref(db,'signage/ticker'), s => {
+    document.getElementById('ticker-input').value = s.val() || '';
   });
-
   window.saveTicker = async () => {
-    const val = document.getElementById('ticker-input').value;
-    await set(ref(db, 'signage/ticker'), val);
-    showToast();
+    await set(ref(db,'signage/ticker'), document.getElementById('ticker-input').value);
+    toast('✓ Ticker aggiornato');
   };
 
   // SLIDES
-  let slidesData = {};
-
-  function initData() {
-    onValue(ref(db, 'signage/slides'), snap => {
-      slidesData = snap.val() || {};
-      renderList();
-    });
+  let data = {};
+  function init() {
+    onValue(ref(db,'signage/slides'), s => { data = s.val()||{}; renderList(); });
   }
 
   function renderList() {
     const list = document.getElementById('slides-list');
     list.innerHTML = '';
-    const entries = Object.entries(slidesData);
-    if (entries.length === 0) {
+    const entries = Object.entries(data);
+    if (!entries.length) {
       list.innerHTML = '<p style="color:var(--gray);text-align:center;padding:20px">Nessuna slide. Aggiungine una!</p>';
       return;
     }
     entries.forEach(([key, s]) => {
-      const card = document.createElement('div');
-      card.className = 'slide-card' + (s.active === false ? ' inactive' : '');
-      const typeLabel = { text:'Solo testo', image:'Immagine + testo', video:'Video YouTube' }[s.type] || s.type;
-      const badgeClass = { text:'badge-text', image:'badge-image', video:'badge-video' }[s.type] || '';
-      card.innerHTML = `
+      const div = document.createElement('div');
+      div.className = 'slide-card' + (s.active===false?' inactive':'');
+      const labels = {text:'Solo testo',image:'Immagine + testo',video:'Video YouTube'};
+      const badges = {text:'badge-text',image:'badge-image',video:'badge-video'};
+      const icons  = {text:'📝',video:'▶️'};
+      let thumbInner = s.imageUrl
+        ? `<img src="${s.imageUrl}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:6px">`
+        : icons[s.type]||'📝';
+      div.innerHTML = `
+        <div class="slide-thumb">${thumbInner}</div>
         <div class="slide-info">
-          <div class="s-type"><span class="badge ${badgeClass}">${typeLabel}</span></div>
-          <div class="s-title">${s.title || s.youtubeId || '—'}</div>
-          <div class="s-body">${s.body || (s.imageUrl ? '🖼 ' + s.imageUrl.slice(0,50)+'…' : '') || ''}</div>
+          <div class="s-type">
+            <span class="badge ${badges[s.type]||''}">${labels[s.type]||s.type}</span>
+            <span style="color:var(--gray);font-size:11px;margin-left:8px">${s.duration||8}s</span>
+          </div>
+          <div class="s-title">${s.title||s.youtubeId||'—'}</div>
+          <div class="s-body">${s.body||''}</div>
         </div>
         <div class="slide-actions">
-          <button class="btn-icon btn-toggle" title="${s.active===false?'Attiva':'Disattiva'}"
-            onclick="toggleSlide('${key}',${s.active!==false})">${s.active===false?'▶':'⏸'}</button>
-          <button class="btn-icon btn-del" title="Elimina" onclick="deleteSlide('${key}')">🗑</button>
+          <button class="btn-icon btn-toggle" onclick="toggleSlide('${key}',${s.active!==false})"
+            title="${s.active===false?'Attiva':'Disattiva'}">${s.active===false?'▶':'⏸'}</button>
+          <button class="btn-icon btn-del" onclick="deleteSlide('${key}')" title="Elimina">🗑</button>
         </div>`;
-      list.appendChild(card);
+      list.appendChild(div);
     });
   }
 
-  window.toggleSlide = async (key, isActive) => {
-    await update(ref(db, `signage/slides/${key}`), { active: !isActive });
+  window.toggleSlide = (k,v) => update(ref(db,`signage/slides/${k}`),{active:!v});
+  window.deleteSlide  = async k => {
+    if(confirm('Eliminare questa slide?')) await remove(ref(db,`signage/slides/${k}`));
   };
 
-  window.deleteSlide = async (key) => {
-    if (!confirm('Eliminare questa slide?')) return;
-    await remove(ref(db, `signage/slides/${key}`));
+  // CLOUDINARY UPLOAD
+  window.doUpload = async input => {
+    const file = input.files[0];
+    if (!file) return;
+
+    // Preview locale immediata
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('upload-preview').src = e.target.result;
+      document.getElementById('upload-preview').style.display = 'block';
+      document.getElementById('upload-placeholder').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+
+    // UI loading
+    document.getElementById('prog-wrap').style.display = 'block';
+    document.getElementById('upload-ok').style.display = 'none';
+    document.getElementById('btn-save').disabled = true;
+    document.getElementById('btn-save').textContent = '⏳ Attendi...';
+
+    let p = 0;
+    const iv = setInterval(() => {
+      p = Math.min(p + Math.random()*12, 88);
+      document.getElementById('prog-fill').style.width = p+'%';
+    }, 180);
+
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('upload_preset', PRESET);
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, {method:'POST',body:fd});
+      const json = await res.json();
+      clearInterval(iv);
+      document.getElementById('prog-fill').style.width = '100%';
+      if (json.secure_url) {
+        document.getElementById('f-imageUrl').value = json.secure_url;
+        document.getElementById('url-preview').textContent = '🔗 '+json.secure_url;
+        document.getElementById('url-preview').style.display = 'block';
+        document.getElementById('upload-ok').style.display = 'block';
+        document.getElementById('prog-label').textContent = '✓ Caricata!';
+      } else throw new Error();
+    } catch {
+      clearInterval(iv);
+      document.getElementById('prog-label').textContent = '❌ Errore. Riprova.';
+      document.getElementById('prog-label').style.color = 'var(--red)';
+    }
+    document.getElementById('btn-save').disabled = false;
+    document.getElementById('btn-save').textContent = 'Salva';
   };
 
   // MODAL
-  let editingKey = null;
-
   window.openModal = () => {
-    editingKey = null;
-    document.getElementById('modal-title').textContent = 'Nuova Slide';
-    document.getElementById('f-type').value = 'text';
-    document.getElementById('f-tag').value = '';
-    document.getElementById('f-title').value = '';
-    document.getElementById('f-body').value = '';
+    ['f-tag','f-title','f-body','f-youtubeId'].forEach(id => document.getElementById(id).value='');
     document.getElementById('f-imageUrl').value = '';
-    document.getElementById('f-youtubeId').value = '';
     document.getElementById('f-duration').value = '8';
+    document.getElementById('f-type').value = 'text';
+    document.getElementById('upload-preview').style.display = 'none';
+    document.getElementById('upload-preview').src = '';
+    document.getElementById('upload-placeholder').style.display = 'block';
+    document.getElementById('prog-wrap').style.display = 'none';
+    document.getElementById('prog-fill').style.width = '0%';
+    document.getElementById('prog-label').textContent = 'Caricamento...';
+    document.getElementById('prog-label').style.color = 'var(--gold)';
+    document.getElementById('upload-ok').style.display = 'none';
+    document.getElementById('url-preview').style.display = 'none';
+    document.getElementById('f-file').value = '';
+    document.getElementById('btn-save').disabled = false;
+    document.getElementById('btn-save').textContent = 'Salva';
     onTypeChange();
     document.getElementById('modal-overlay').classList.add('open');
   };
-
-  window.closeModal = () => {
-    document.getElementById('modal-overlay').classList.remove('open');
-  };
+  window.closeModal = () => document.getElementById('modal-overlay').classList.remove('open');
 
   window.onTypeChange = () => {
     const t = document.getElementById('f-type').value;
-    document.getElementById('fields-image').style.display = t === 'image' ? 'block' : 'none';
-    document.getElementById('fields-video').style.display = t === 'video' ? 'block' : 'none';
-    const hide = t === 'video';
-    document.getElementById('fields-text-image').style.display = hide ? 'none' : 'block';
-    document.getElementById('fields-text-image2').style.display = hide ? 'none' : 'block';
-    document.getElementById('fields-text-image3').style.display = hide ? 'none' : 'block';
+    document.getElementById('fields-text').style.display  = t==='video' ? 'none':'block';
+    document.getElementById('fields-image').style.display = t==='image' ? 'block':'none';
+    document.getElementById('fields-video').style.display = t==='video' ? 'block':'none';
   };
 
   window.saveSlide = async () => {
     const type = document.getElementById('f-type').value;
-    const data = {
-      type,
-      active: true,
-      duration: parseInt(document.getElementById('f-duration').value) || 8,
-    };
-    if (type !== 'video') {
-      data.tag = document.getElementById('f-tag').value;
-      data.title = document.getElementById('f-title').value;
-      data.body = document.getElementById('f-body').value;
+    if (type==='image' && !document.getElementById('f-imageUrl').value) {
+      alert('Carica prima un\'immagine!'); return;
     }
-    if (type === 'image') data.imageUrl = document.getElementById('f-imageUrl').value;
-    if (type === 'video') data.youtubeId = document.getElementById('f-youtubeId').value;
-
-    await push(ref(db, 'signage/slides'), data);
+    if (type==='video' && !document.getElementById('f-youtubeId').value.trim()) {
+      alert('Inserisci l\'ID del video YouTube!'); return;
+    }
+    const slide = {
+      type, active:true,
+      duration: parseInt(document.getElementById('f-duration').value)||8
+    };
+    if (type!=='video') {
+      slide.tag   = document.getElementById('f-tag').value;
+      slide.title = document.getElementById('f-title').value;
+      slide.body  = document.getElementById('f-body').value;
+    }
+    if (type==='image') slide.imageUrl  = document.getElementById('f-imageUrl').value;
+    if (type==='video') slide.youtubeId = document.getElementById('f-youtubeId').value.trim();
+    await push(ref(db,'signage/slides'), slide);
     closeModal();
-    showToast();
+    toast('✓ Slide aggiunta!');
   };
 
-  function showToast() {
-    const t = document.getElementById('toast');
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2000);
+  function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'), 2500);
   }
-
-  // Enter per login
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
-      window.doLogin();
-    }
-  });
 </script>
 </body>
 </html>
