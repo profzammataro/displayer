@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Labriola Signage</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blu: #0a1628; --blu2: #112244; --gold: #c8a84b;
+    --white: #f0f4ff; --gray: #8899bb;
+    --green: #2ecc71; --red: #e74c3c;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#111827; color:var(--white); font-family:'Lato',sans-serif; min-height:100vh; }
+
+  /* LOGIN */
+  #login-screen {
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background: var(--blu);
+  }
+  .login-box {
+    background: var(--blu2); padding:48px; border-radius:12px;
+    border:1px solid rgba(200,168,75,0.3);
+    width:360px; text-align:center;
+  }
+  .login-box h1 { font-family:'Bebas Neue'; font-size:32px; letter-spacing:3px; color:var(--gold); margin-bottom:8px; }
+  .login-box p { color:var(--gray); font-size:13px; margin-bottom:32px; }
+  .login-box input {
+    width:100%; padding:12px 16px; margin-bottom:12px;
+    background:#1a2a4a; border:1px solid #334466; border-radius:8px;
+    color:var(--white); font-size:15px; outline:none;
+  }
+  .login-box input:focus { border-color:var(--gold); }
+  .btn-gold {
+    width:100%; padding:14px; background:var(--gold); color:var(--blu);
+    border:none; border-radius:8px; font-weight:700; font-size:16px;
+    cursor:pointer; letter-spacing:1px;
+  }
+  .btn-gold:hover { background:#d4b35a; }
+  #login-error { color:var(--red); font-size:13px; margin-top:12px; min-height:20px; }
+
+  /* MAIN APP */
+  #app { display:none; min-height:100vh; }
+  nav {
+    background:var(--blu2); border-bottom:2px solid var(--gold);
+    padding:16px 32px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-title { font-family:'Bebas Neue'; font-size:24px; letter-spacing:3px; color:var(--gold); }
+  .nav-title span { color:var(--gray); font-size:14px; font-family:'Lato'; letter-spacing:1px; }
+  .btn-sm {
+    padding:8px 18px; border-radius:6px; border:none; cursor:pointer;
+    font-weight:700; font-size:13px; letter-spacing:1px;
+  }
+  .btn-danger { background:var(--red); color:#fff; }
+  .btn-danger:hover { background:#c0392b; }
+
+  main { padding:32px; max-width:960px; margin:0 auto; }
+
+  /* TICKER */
+  .section { margin-bottom:40px; }
+  .section-title {
+    font-family:'Bebas Neue'; font-size:22px; letter-spacing:2px;
+    color:var(--gold); border-bottom:1px solid #223; padding-bottom:10px; margin-bottom:20px;
+  }
+  .ticker-row { display:flex; gap:12px; }
+  .ticker-row input {
+    flex:1; padding:12px 16px; background:#1a2a4a; border:1px solid #334;
+    border-radius:8px; color:var(--white); font-size:15px; outline:none;
+  }
+  .ticker-row input:focus { border-color:var(--gold); }
+  .btn-save { background:var(--green); color:#fff; }
+  .btn-save:hover { background:#27ae60; }
+
+  /* SLIDE CARDS */
+  #slides-list { display:grid; gap:16px; }
+  .slide-card {
+    background:#1a2233; border-radius:10px; border:1px solid #334;
+    padding:20px; display:flex; gap:20px; align-items:flex-start;
+  }
+  .slide-card.inactive { opacity:0.5; }
+  .slide-info { flex:1; }
+  .slide-info .s-type {
+    font-size:10px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--gold); margin-bottom:6px;
+  }
+  .slide-info .s-title { font-weight:700; font-size:17px; margin-bottom:4px; }
+  .slide-info .s-body { color:var(--gray); font-size:13px; }
+  .slide-actions { display:flex; flex-direction:column; gap:8px; }
+  .btn-icon {
+    width:36px; height:36px; border-radius:6px; border:none; cursor:pointer;
+    font-size:16px; display:flex; align-items:center; justify-content:center;
+  }
+  .btn-toggle { background:#334; color:var(--white); }
+  .btn-del { background:var(--red); color:#fff; }
+  .btn-up, .btn-dn { background:#223; color:var(--gray); }
+
+  /* MODAL */
+  #modal-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,0.7); z-index:100;
+    align-items:center; justify-content:center;
+  }
+  #modal-overlay.open { display:flex; }
+  .modal {
+    background:#1a2233; border-radius:12px; border:1px solid var(--gold);
+    padding:32px; width:520px; max-width:95vw;
+  }
+  .modal h3 { font-family:'Bebas Neue'; font-size:24px; letter-spacing:2px; margin-bottom:24px; color:var(--gold); }
+  .form-group { margin-bottom:16px; }
+  .form-group label { display:block; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-bottom:6px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width:100%; padding:10px 14px; background:#111827; border:1px solid #334;
+    border-radius:8px; color:var(--white); font-size:14px; font-family:'Lato'; outline:none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--gold); }
+  .form-group textarea { resize:vertical; height:80px; }
+  .form-group select option { background:#1a2233; }
+  .modal-footer { display:flex; gap:12px; justify-content:flex-end; margin-top:24px; }
+  .btn-cancel { background:#334; color:var(--white); }
+
+  .type-fields { display:none; }
+  .type-fields.visible { display:block; }
+
+  /* ADD BUTTON */
+  #btn-add-slide {
+    width:100%; padding:16px; background:rgba(200,168,75,0.1);
+    border:2px dashed var(--gold); border-radius:10px; color:var(--gold);
+    font-family:'Bebas Neue'; font-size:20px; letter-spacing:2px;
+    cursor:pointer; margin-top:8px;
+  }
+  #btn-add-slide:hover { background:rgba(200,168,75,0.2); }
+
+  .badge {
+    display:inline-block; padding:2px 10px; border-radius:20px;
+    font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+  }
+  .badge-text { background:#334; color:var(--gray); }
+  .badge-image { background:#1a3a5c; color:#5bb8ff; }
+  .badge-video { background:#3a1a1a; color:#ff7070; }
+
+  #toast {
+    position:fixed; bottom:24px; right:24px;
+    background:var(--green); color:#fff;
+    padding:12px 24px; border-radius:8px;
+    font-weight:700; font-size:14px; letter-spacing:1px;
+    transform:translateY(80px); opacity:0; transition:all 0.3s;
+    pointer-events:none; z-index:200;
+  }
+  #toast.show { transform:translateY(0); opacity:1; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <h1>LABRIOLA</h1>
+    <p>Pannello di controllo · Digital Signage</p>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button class="btn-gold" onclick="doLogin()">ACCEDI</button>
+    <div id="login-error"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <nav>
+    <div>
+      <div class="nav-title">LABRIOLA SIGNAGE <span>· Admin</span></div>
+    </div>
+    <button class="btn-sm btn-danger" onclick="doLogout()">Esci</button>
+  </nav>
+
+  <main>
+    <!-- TICKER -->
+    <div class="section">
+      <div class="section-title">📢 Ticker (fascia in basso)</div>
+      <div class="ticker-row">
+        <input type="text" id="ticker-input" placeholder="Testo scorrevole in basso..." />
+        <button class="btn-sm btn-save" onclick="saveTicker()">Salva</button>
+      </div>
+    </div>
+
+    <!-- SLIDE -->
+    <div class="section">
+      <div class="section-title">🖼️ Slide</div>
+      <div id="slides-list"></div>
+      <button id="btn-add-slide" onclick="openModal()">+ Aggiungi Slide</button>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal">
+    <h3 id="modal-title">Nuova Slide</h3>
+
+    <div class="form-group">
+      <label>Tipo</label>
+      <select id="f-type" onchange="onTypeChange()">
+        <option value="text">Solo testo</option>
+        <option value="image">Immagine + testo</option>
+        <option value="video">Video YouTube</option>
+      </select>
+    </div>
+
+    <div class="form-group type-fields" id="fields-text-image" style="display:block">
+      <label>Etichetta (tag)</label>
+      <input type="text" id="f-tag" placeholder="es. Evento, Comunicazione..." />
+    </div>
+    <div class="form-group type-fields" id="fields-text-image2" style="display:block">
+      <label>Titolo</label>
+      <input type="text" id="f-title" placeholder="Titolo principale" />
+    </div>
+    <div class="form-group type-fields" id="fields-text-image3" style="display:block">
+      <label>Testo</label>
+      <textarea id="f-body" placeholder="Descrizione o dettagli..."></textarea>
+    </div>
+
+    <div class="form-group type-fields" id="fields-image">
+      <label>URL Immagine</label>
+      <input type="text" id="f-imageUrl" placeholder="https://..." />
+    </div>
+
+    <div class="form-group type-fields" id="fields-video">
+      <label>YouTube Video ID</label>
+      <input type="text" id="f-youtubeId" placeholder="es. dQw4w9WgXcQ" />
+    </div>
+
+    <div class="form-group">
+      <label>Durata (secondi)</label>
+      <input type="number" id="f-duration" value="8" min="3" max="60" />
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-sm btn-cancel" onclick="closeModal()">Annulla</button>
+      <button class="btn-sm btn-gold" onclick="saveSlide()">Salva</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast">✓ Salvato</div>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, set, push, remove, onValue, update }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDNDrCcZ8O9xdSgMDxjZscG2q2MQ-8ShRw",
+    authDomain: "displayer-2b20c.firebaseapp.com",
+    databaseURL: "https://displayer-2b20c-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "displayer-2b20c",
+    storageBucket: "displayer-2b20c.firebasestorage.app",
+    messagingSenderId: "406579948319",
+    appId: "1:406579948319:web:910abf919d89c7c4d99e2a"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const auth = getAuth(app);
+
+  // AUTH
+  window.doLogin = async () => {
+    const email = document.getElementById('email').value;
+    const pw = document.getElementById('password').value;
+    try {
+      await signInWithEmailAndPassword(auth, email, pw);
+    } catch(e) {
+      document.getElementById('login-error').textContent = 'Credenziali non valide';
+    }
+  };
+  window.doLogout = () => signOut(auth);
+
+  onAuthStateChanged(auth, user => {
+    document.getElementById('login-screen').style.display = user ? 'none' : 'flex';
+    document.getElementById('app').style.display = user ? 'block' : 'none';
+    if (user) initData();
+  });
+
+  // TICKER
+  onValue(ref(db, 'signage/ticker'), snap => {
+    document.getElementById('ticker-input').value = snap.val() || '';
+  });
+
+  window.saveTicker = async () => {
+    const val = document.getElementById('ticker-input').value;
+    await set(ref(db, 'signage/ticker'), val);
+    showToast();
+  };
+
+  // SLIDES
+  let slidesData = {};
+
+  function initData() {
+    onValue(ref(db, 'signage/slides'), snap => {
+      slidesData = snap.val() || {};
+      renderList();
+    });
+  }
+
+  function renderList() {
+    const list = document.getElementById('slides-list');
+    list.innerHTML = '';
+    const entries = Object.entries(slidesData);
+    if (entries.length === 0) {
+      list.innerHTML = '<p style="color:var(--gray);text-align:center;padding:20px">Nessuna slide. Aggiungine una!</p>';
+      return;
+    }
+    entries.forEach(([key, s]) => {
+      const card = document.createElement('div');
+      card.className = 'slide-card' + (s.active === false ? ' inactive' : '');
+      const typeLabel = { text:'Solo testo', image:'Immagine + testo', video:'Video YouTube' }[s.type] || s.type;
+      const badgeClass = { text:'badge-text', image:'badge-image', video:'badge-video' }[s.type] || '';
+      card.innerHTML = `
+        <div class="slide-info">
+          <div class="s-type"><span class="badge ${badgeClass}">${typeLabel}</span></div>
+          <div class="s-title">${s.title || s.youtubeId || '—'}</div>
+          <div class="s-body">${s.body || (s.imageUrl ? '🖼 ' + s.imageUrl.slice(0,50)+'…' : '') || ''}</div>
+        </div>
+        <div class="slide-actions">
+          <button class="btn-icon btn-toggle" title="${s.active===false?'Attiva':'Disattiva'}"
+            onclick="toggleSlide('${key}',${s.active!==false})">${s.active===false?'▶':'⏸'}</button>
+          <button class="btn-icon btn-del" title="Elimina" onclick="deleteSlide('${key}')">🗑</button>
+        </div>`;
+      list.appendChild(card);
+    });
+  }
+
+  window.toggleSlide = async (key, isActive) => {
+    await update(ref(db, `signage/slides/${key}`), { active: !isActive });
+  };
+
+  window.deleteSlide = async (key) => {
+    if (!confirm('Eliminare questa slide?')) return;
+    await remove(ref(db, `signage/slides/${key}`));
+  };
+
+  // MODAL
+  let editingKey = null;
+
+  window.openModal = () => {
+    editingKey = null;
+    document.getElementById('modal-title').textContent = 'Nuova Slide';
+    document.getElementById('f-type').value = 'text';
+    document.getElementById('f-tag').value = '';
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-body').value = '';
+    document.getElementById('f-imageUrl').value = '';
+    document.getElementById('f-youtubeId').value = '';
+    document.getElementById('f-duration').value = '8';
+    onTypeChange();
+    document.getElementById('modal-overlay').classList.add('open');
+  };
+
+  window.closeModal = () => {
+    document.getElementById('modal-overlay').classList.remove('open');
+  };
+
+  window.onTypeChange = () => {
+    const t = document.getElementById('f-type').value;
+    document.getElementById('fields-image').style.display = t === 'image' ? 'block' : 'none';
+    document.getElementById('fields-video').style.display = t === 'video' ? 'block' : 'none';
+    const hide = t === 'video';
+    document.getElementById('fields-text-image').style.display = hide ? 'none' : 'block';
+    document.getElementById('fields-text-image2').style.display = hide ? 'none' : 'block';
+    document.getElementById('fields-text-image3').style.display = hide ? 'none' : 'block';
+  };
+
+  window.saveSlide = async () => {
+    const type = document.getElementById('f-type').value;
+    const data = {
+      type,
+      active: true,
+      duration: parseInt(document.getElementById('f-duration').value) || 8,
+    };
+    if (type !== 'video') {
+      data.tag = document.getElementById('f-tag').value;
+      data.title = document.getElementById('f-title').value;
+      data.body = document.getElementById('f-body').value;
+    }
+    if (type === 'image') data.imageUrl = document.getElementById('f-imageUrl').value;
+    if (type === 'video') data.youtubeId = document.getElementById('f-youtubeId').value;
+
+    await push(ref(db, 'signage/slides'), data);
+    closeModal();
+    showToast();
+  };
+
+  function showToast() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  // Enter per login
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') {
+      window.doLogin();
+    }
+  });
+</script>
+</body>
+</html>
