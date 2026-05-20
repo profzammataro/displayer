@@ -34,14 +34,7 @@
     gap: 12px;
   }
   .logo-area { display: flex; align-items: center; gap: 12px; min-width: 0; }
-  .logo-circle {
-    width: 42px; height: 42px; border-radius: 50%;
-    border: 2px solid var(--gold); background: var(--blu);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px; color: var(--gold); letter-spacing: 1px;
-    flex-shrink: 0;
-  }
+
   .school-name {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(16px, 3vw, 28px);
@@ -108,21 +101,23 @@
     flex-direction: row;
   }
   .slide-image .img-half {
-    flex: 1;
-    background-size: cover; background-position: center;
+    flex: 0 0 62%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
     position: relative;
     min-width: 0;
   }
   .slide-image .img-half::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(to right, transparent 50%, var(--blu));
+    background: linear-gradient(to right, transparent 72%, var(--blu) 100%);
   }
   .slide-image .text-half {
     flex: 1;
     display: flex; flex-direction: column;
     justify-content: center;
-    padding: clamp(16px, 3vw, 48px) clamp(16px, 4vw, 60px);
+    padding: clamp(16px, 2.5vw, 40px) clamp(16px, 3.5vw, 52px);
     background: var(--blu);
     min-width: 0;
     overflow: hidden;
@@ -251,7 +246,7 @@
 
 <header>
   <div class="logo-area">
-    <div class="logo-circle">LL</div>
+    <img src="logo_labriola.jpg" alt="Liceo Labriola" style="height:44px;width:44px;object-fit:contain;border-radius:4px;flex-shrink:0;">
     <div>
       <div class="school-name">Liceo Labriola</div>
       <div class="school-sub">Roma · Informazioni & Comunicazioni</div>
