@@ -9,140 +9,151 @@
   :root {
     --blu: #0a1628; --blu2: #112244; --gold: #c8a84b;
     --white: #f0f4ff; --gray: #8899bb;
-    --green: #2ecc71; --red: #e74c3c;
+    --green: #2ecc71; --red: #e74c3c; --blue: #3498db;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:#111827; color:var(--white); font-family:'Lato',sans-serif; min-height:100vh; }
 
+  /* LOGIN */
   #login-screen {
     min-height:100vh; display:flex; align-items:center; justify-content:center;
-    background: var(--blu);
+    background:var(--blu);
   }
   .login-box {
-    background: var(--blu2); padding:48px; border-radius:12px;
-    border:1px solid rgba(200,168,75,0.3); width:360px; text-align:center;
+    background:var(--blu2); padding:40px; border-radius:12px;
+    border:1px solid rgba(200,168,75,0.3); width:340px; text-align:center;
   }
-  .login-box h1 { font-family:'Bebas Neue'; font-size:32px; letter-spacing:3px; color:var(--gold); margin-bottom:8px; }
-  .login-box p { color:var(--gray); font-size:13px; margin-bottom:32px; }
+  .login-box h1 { font-family:'Bebas Neue'; font-size:30px; letter-spacing:3px; color:var(--gold); margin-bottom:6px; }
+  .login-box p  { color:var(--gray); font-size:13px; margin-bottom:28px; }
   .login-box input {
-    width:100%; padding:12px 16px; margin-bottom:12px;
+    width:100%; padding:11px 14px; margin-bottom:10px;
     background:#1a2a4a; border:1px solid #334466; border-radius:8px;
     color:var(--white); font-size:15px; outline:none;
   }
   .login-box input:focus { border-color:var(--gold); }
   .btn-gold {
-    width:100%; padding:14px; background:var(--gold); color:var(--blu);
+    width:100%; padding:13px; background:var(--gold); color:var(--blu);
     border:none; border-radius:8px; font-weight:700; font-size:16px;
     cursor:pointer; letter-spacing:1px;
   }
   .btn-gold:hover { background:#d4b35a; }
-  #login-error { color:var(--red); font-size:13px; margin-top:12px; min-height:20px; }
+  #login-error { color:var(--red); font-size:13px; margin-top:10px; min-height:18px; }
 
+  /* APP */
   #app { display:none; min-height:100vh; }
   nav {
     background:var(--blu2); border-bottom:2px solid var(--gold);
-    padding:16px 32px; display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; display:flex; align-items:center; justify-content:space-between;
   }
-  .nav-title { font-family:'Bebas Neue'; font-size:24px; letter-spacing:3px; color:var(--gold); }
-  .nav-title span { color:var(--gray); font-size:14px; font-family:'Lato'; letter-spacing:1px; }
-  .btn-sm { padding:8px 18px; border-radius:6px; border:none; cursor:pointer; font-weight:700; font-size:13px; letter-spacing:1px; }
+  .nav-title { font-family:'Bebas Neue'; font-size:22px; letter-spacing:3px; color:var(--gold); }
+  .nav-title span { color:var(--gray); font-size:13px; font-family:'Lato'; letter-spacing:1px; }
+  .btn-sm { padding:8px 16px; border-radius:6px; border:none; cursor:pointer; font-weight:700; font-size:13px; }
   .btn-danger { background:var(--red); color:#fff; }
+  .btn-save   { background:var(--green); color:#fff; }
+  .btn-edit   { background:var(--blue); color:#fff; }
 
-  main { padding:32px; max-width:960px; margin:0 auto; }
-  .section { margin-bottom:40px; }
+  main { padding:24px; max-width:900px; margin:0 auto; }
+
+  .section { margin-bottom:36px; }
   .section-title {
-    font-family:'Bebas Neue'; font-size:22px; letter-spacing:2px;
-    color:var(--gold); border-bottom:1px solid #223; padding-bottom:10px; margin-bottom:20px;
+    font-family:'Bebas Neue'; font-size:20px; letter-spacing:2px;
+    color:var(--gold); border-bottom:1px solid #223; padding-bottom:8px; margin-bottom:16px;
   }
-  .ticker-row { display:flex; gap:12px; }
+  .ticker-row { display:flex; gap:10px; }
   .ticker-row input {
-    flex:1; padding:12px 16px; background:#1a2a4a; border:1px solid #334;
-    border-radius:8px; color:var(--white); font-size:15px; outline:none;
+    flex:1; padding:11px 14px; background:#1a2a4a; border:1px solid #334;
+    border-radius:8px; color:var(--white); font-size:14px; outline:none;
   }
   .ticker-row input:focus { border-color:var(--gold); }
-  .btn-save { background:var(--green); color:#fff; }
 
-  #slides-list { display:grid; gap:16px; }
+  /* SLIDE CARDS */
+  #slides-list { display:grid; gap:12px; }
   .slide-card {
     background:#1a2233; border-radius:10px; border:1px solid #334;
-    padding:20px; display:flex; gap:16px; align-items:flex-start;
+    padding:14px 16px; display:flex; gap:14px; align-items:center;
   }
-  .slide-card.inactive { opacity:0.5; }
+  .slide-card.inactive { opacity:0.45; }
   .slide-thumb {
-    width:80px; height:60px; border-radius:6px; object-fit:cover;
-    background:#223; flex-shrink:0; display:flex; align-items:center;
-    justify-content:center; font-size:24px; overflow:hidden;
+    width:72px; height:54px; border-radius:6px; flex-shrink:0;
+    background:#223; display:flex; align-items:center; justify-content:center;
+    font-size:22px; overflow:hidden;
   }
-  .slide-thumb img { width:100%; height:100%; object-fit:cover; }
+  .slide-thumb img { width:100%; height:100%; object-fit:cover; border-radius:6px; }
   .slide-info { flex:1; min-width:0; }
-  .slide-info .s-type { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
-  .slide-info .s-title { font-weight:700; font-size:16px; margin-bottom:4px; }
-  .slide-info .s-body { color:var(--gray); font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .slide-actions { display:flex; flex-direction:column; gap:8px; flex-shrink:0; }
-  .btn-icon { width:36px; height:36px; border-radius:6px; border:none; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; }
+  .s-type { margin-bottom:4px; display:flex; align-items:center; gap:8px; }
+  .badge { display:inline-block; padding:2px 8px; border-radius:20px; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  .badge-text  { background:#334; color:var(--gray); }
+  .badge-image { background:#1a3a5c; color:#5bb8ff; }
+  .badge-video { background:#3a1a1a; color:#ff7070; }
+  .s-dur { font-size:11px; color:var(--gray); }
+  .s-title { font-weight:700; font-size:15px; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .s-body  { color:var(--gray); font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .slide-actions { display:flex; gap:6px; flex-shrink:0; }
+  .btn-icon {
+    width:34px; height:34px; border-radius:6px; border:none; cursor:pointer;
+    font-size:15px; display:flex; align-items:center; justify-content:center;
+  }
   .btn-toggle { background:#334; color:var(--white); }
-  .btn-del { background:var(--red); color:#fff; }
+  .btn-del    { background:var(--red); color:#fff; }
+  .btn-mod    { background:var(--blue); color:#fff; }
 
+  /* MODAL */
   #modal-overlay {
     display:none; position:fixed; inset:0;
     background:rgba(0,0,0,0.85); z-index:100;
     align-items:flex-start; justify-content:center;
-    overflow-y:auto; padding:24px 12px;
+    overflow-y:auto; padding:20px 12px;
   }
   #modal-overlay.open { display:flex; }
   .modal {
     background:#1a2233; border-radius:12px; border:1px solid var(--gold);
-    padding:28px; width:520px; max-width:100%; margin:auto;
+    padding:26px; width:500px; max-width:100%; margin:auto;
   }
-  .modal h3 { font-family:'Bebas Neue'; font-size:24px; letter-spacing:2px; margin-bottom:20px; color:var(--gold); }
-  .form-group { margin-bottom:14px; }
-  .form-group label { display:block; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-bottom:5px; }
+  .modal h3 { font-family:'Bebas Neue'; font-size:22px; letter-spacing:2px; margin-bottom:18px; color:var(--gold); }
+  .form-group { margin-bottom:13px; }
+  .form-group label { display:block; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin-bottom:4px; }
   .form-group input, .form-group select, .form-group textarea {
-    width:100%; padding:10px 14px; background:#111827; border:1px solid #334;
+    width:100%; padding:9px 12px; background:#111827; border:1px solid #334;
     border-radius:8px; color:var(--white); font-size:14px; font-family:'Lato'; outline:none;
   }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--gold); }
-  .form-group textarea { resize:vertical; height:72px; }
+  .form-group textarea { resize:vertical; height:68px; }
   .form-group select option { background:#1a2233; }
-  .modal-footer { display:flex; gap:12px; justify-content:flex-end; margin-top:20px; }
+  .modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:18px; }
   .btn-cancel { background:#334; color:var(--white); }
 
   /* UPLOAD */
   #upload-area {
-    border:2px dashed #445; border-radius:10px; padding:20px;
-    text-align:center; cursor:pointer; transition:border-color 0.2s, background 0.2s;
-    min-height:100px; display:flex; flex-direction:column;
-    align-items:center; justify-content:center; gap:8px;
+    border:2px dashed #445; border-radius:10px; padding:18px;
+    text-align:center; cursor:pointer;
+    transition:border-color 0.2s, background 0.2s;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:6px; min-height:90px;
   }
   #upload-area:hover { border-color:var(--gold); background:rgba(200,168,75,0.05); }
-  #upload-placeholder { color:var(--gray); font-size:14px; }
-  #upload-placeholder .pu-icon { font-size:28px; display:block; margin-bottom:4px; }
-  #upload-preview { display:none; max-width:100%; max-height:130px; border-radius:6px; }
+  #upload-placeholder { color:var(--gray); font-size:13px; }
+  #upload-placeholder .pu-icon { font-size:26px; display:block; margin-bottom:2px; }
+  #upload-preview { display:none; max-width:100%; max-height:120px; border-radius:6px; }
   .prog-wrap { display:none; width:100%; }
-  .prog-bar { height:4px; background:#334; border-radius:2px; overflow:hidden; }
+  .prog-bar  { height:4px; background:#334; border-radius:2px; overflow:hidden; }
   .prog-fill { height:100%; background:var(--gold); width:0%; transition:width 0.3s; }
-  .prog-label { font-size:12px; color:var(--gold); margin-top:5px; }
-  #upload-ok { display:none; color:var(--green); font-weight:700; font-size:13px; }
-  #url-preview { font-size:10px; color:#556; word-break:break-all; margin-top:6px; display:none; }
+  .prog-label { font-size:11px; color:var(--gold); margin-top:4px; text-align:center; }
+  #upload-ok { display:none; color:var(--green); font-weight:700; font-size:12px; }
+  #url-preview { font-size:10px; color:#556; word-break:break-all; margin-top:4px; display:none; }
 
   #btn-add-slide {
-    width:100%; padding:16px; background:rgba(200,168,75,0.1);
+    width:100%; padding:14px; background:rgba(200,168,75,0.1);
     border:2px dashed var(--gold); border-radius:10px; color:var(--gold);
-    font-family:'Bebas Neue'; font-size:20px; letter-spacing:2px;
-    cursor:pointer; margin-top:8px;
+    font-family:'Bebas Neue'; font-size:18px; letter-spacing:2px;
+    cursor:pointer; margin-top:6px;
   }
-  #btn-add-slide:hover { background:rgba(200,168,75,0.2); }
-
-  .badge { display:inline-block; padding:2px 10px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
-  .badge-text { background:#334; color:var(--gray); }
-  .badge-image { background:#1a3a5c; color:#5bb8ff; }
-  .badge-video { background:#3a1a1a; color:#ff7070; }
+  #btn-add-slide:hover { background:rgba(200,168,75,0.18); }
 
   #toast {
-    position:fixed; bottom:24px; right:24px;
+    position:fixed; bottom:20px; right:20px;
     background:var(--green); color:#fff;
-    padding:12px 24px; border-radius:8px; font-weight:700; font-size:14px;
-    transform:translateY(80px); opacity:0; transition:all 0.3s;
+    padding:10px 22px; border-radius:8px; font-weight:700; font-size:13px;
+    transform:translateY(70px); opacity:0; transition:all 0.3s;
     pointer-events:none; z-index:200;
   }
   #toast.show { transform:translateY(0); opacity:1; }
@@ -150,6 +161,7 @@
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <h1>LABRIOLA</h1>
@@ -161,6 +173,7 @@
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
   <nav>
     <div class="nav-title">LABRIOLA SIGNAGE <span>· Admin</span></div>
@@ -182,9 +195,10 @@
   </main>
 </div>
 
+<!-- MODAL -->
 <div id="modal-overlay">
   <div class="modal">
-    <h3>Nuova Slide</h3>
+    <h3 id="modal-title">Nuova Slide</h3>
 
     <div class="form-group">
       <label>Tipo</label>
@@ -210,6 +224,7 @@
       </div>
     </div>
 
+    <!-- Upload immagine -->
     <div class="form-group" id="fields-image" style="display:none">
       <label>Immagine</label>
       <div id="upload-area" onclick="document.getElementById('f-file').click()">
@@ -229,10 +244,11 @@
       <div id="url-preview"></div>
     </div>
 
+    <!-- YouTube -->
     <div class="form-group" id="fields-video" style="display:none">
       <label>YouTube Video ID</label>
       <input type="text" id="f-youtubeId" placeholder="es. dQw4w9WgXcQ" />
-      <small style="color:var(--gray);font-size:11px;margin-top:4px;display:block">Parte dopo "v=" nell'URL</small>
+      <small style="color:var(--gray);font-size:11px;margin-top:3px;display:block">Parte dopo "v=" nell'URL del video</small>
     </div>
 
     <div class="form-group">
@@ -266,12 +282,12 @@
     appId: "1:406579948319:web:910abf919d89c7c4d99e2a"
   };
 
-  const CLOUD = 'dpjdgvydp';
+  const CLOUD  = 'dpjdgvydp';
   const PRESET = 'supermarket_cards';
 
-  const app = initializeApp(firebaseConfig);
-  const db  = getDatabase(app);
-  const auth = getAuth(app);
+  const fbApp = initializeApp(firebaseConfig);
+  const db    = getDatabase(fbApp);
+  const auth  = getAuth(fbApp);
 
   // AUTH
   window.doLogin = async () => {
@@ -284,9 +300,8 @@
   };
   window.doLogout = () => signOut(auth);
   document.addEventListener('keydown', e => {
-    if (e.key === 'Enter' && document.getElementById('login-screen').style.display !== 'none') doLogin();
+    if (e.key==='Enter' && document.getElementById('login-screen').style.display!=='none') doLogin();
   });
-
   onAuthStateChanged(auth, u => {
     document.getElementById('login-screen').style.display = u ? 'none' : 'flex';
     document.getElementById('app').style.display = u ? 'block' : 'none';
@@ -303,58 +318,84 @@
   };
 
   // SLIDES
-  let data = {};
+  let allData = {};
   function init() {
-    onValue(ref(db,'signage/slides'), s => { data = s.val()||{}; renderList(); });
+    onValue(ref(db,'signage/slides'), s => { allData = s.val()||{}; renderList(); });
   }
 
   function renderList() {
     const list = document.getElementById('slides-list');
     list.innerHTML = '';
-    const entries = Object.entries(data);
+    const entries = Object.entries(allData);
     if (!entries.length) {
-      list.innerHTML = '<p style="color:var(--gray);text-align:center;padding:20px">Nessuna slide. Aggiungine una!</p>';
+      list.innerHTML = '<p style="color:var(--gray);text-align:center;padding:16px">Nessuna slide. Aggiungine una!</p>';
       return;
     }
+    const labels  = {text:'Solo testo', image:'Immagine + testo', video:'Video YouTube'};
+    const badges  = {text:'badge-text', image:'badge-image', video:'badge-video'};
+    const icons   = {text:'📝', video:'▶️'};
     entries.forEach(([key, s]) => {
       const div = document.createElement('div');
-      div.className = 'slide-card' + (s.active===false?' inactive':'');
-      const labels = {text:'Solo testo',image:'Immagine + testo',video:'Video YouTube'};
-      const badges = {text:'badge-text',image:'badge-image',video:'badge-video'};
-      const icons  = {text:'📝',video:'▶️'};
-      let thumbInner = s.imageUrl
-        ? `<img src="${s.imageUrl}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:6px">`
-        : icons[s.type]||'📝';
+      div.className = 'slide-card' + (s.active===false ? ' inactive' : '');
+      const thumb = s.imageUrl
+        ? `<img src="${s.imageUrl}" alt="">`
+        : (icons[s.type] || '📝');
       div.innerHTML = `
-        <div class="slide-thumb">${thumbInner}</div>
+        <div class="slide-thumb">${thumb}</div>
         <div class="slide-info">
           <div class="s-type">
             <span class="badge ${badges[s.type]||''}">${labels[s.type]||s.type}</span>
-            <span style="color:var(--gray);font-size:11px;margin-left:8px">${s.duration||8}s</span>
+            <span class="s-dur">${s.duration||8}s</span>
           </div>
-          <div class="s-title">${s.title||s.youtubeId||'—'}</div>
-          <div class="s-body">${s.body||''}</div>
+          <div class="s-title">${s.title || s.youtubeId || '—'}</div>
+          <div class="s-body">${s.body || (s.imageUrl ? '🖼 immagine' : '') || ''}</div>
         </div>
         <div class="slide-actions">
-          <button class="btn-icon btn-toggle" onclick="toggleSlide('${key}',${s.active!==false})"
-            title="${s.active===false?'Attiva':'Disattiva'}">${s.active===false?'▶':'⏸'}</button>
-          <button class="btn-icon btn-del" onclick="deleteSlide('${key}')" title="Elimina">🗑</button>
+          <button class="btn-icon btn-mod"    title="Modifica"  onclick="editSlide('${key}')">✏️</button>
+          <button class="btn-icon btn-toggle" title="${s.active===false?'Attiva':'Disattiva'}"
+            onclick="toggleSlide('${key}',${s.active!==false})">${s.active===false?'▶':'⏸'}</button>
+          <button class="btn-icon btn-del"    title="Elimina"   onclick="deleteSlide('${key}')">🗑</button>
         </div>`;
       list.appendChild(div);
     });
   }
 
-  window.toggleSlide = (k,v) => update(ref(db,`signage/slides/${k}`),{active:!v});
+  window.toggleSlide = (k,v) => update(ref(db,`signage/slides/${k}`), {active:!v});
   window.deleteSlide  = async k => {
-    if(confirm('Eliminare questa slide?')) await remove(ref(db,`signage/slides/${k}`));
+    if (confirm('Eliminare questa slide?')) await remove(ref(db,`signage/slides/${k}`));
+  };
+
+  // EDIT: pre-popola il modal con i dati esistenti
+  window.editSlide = key => {
+    const s = allData[key];
+    if (!s) return;
+    editingKey = key;
+    document.getElementById('modal-title').textContent = 'Modifica Slide';
+    document.getElementById('f-type').value = s.type || 'text';
+    document.getElementById('f-tag').value  = s.tag  || '';
+    document.getElementById('f-title').value= s.title|| '';
+    document.getElementById('f-body').value = s.body || '';
+    document.getElementById('f-youtubeId').value = s.youtubeId || '';
+    document.getElementById('f-duration').value  = s.duration  || 8;
+    document.getElementById('f-imageUrl').value  = s.imageUrl  || '';
+
+    // reset upload UI
+    resetUploadUI();
+    if (s.imageUrl) {
+      document.getElementById('upload-preview').src = s.imageUrl;
+      document.getElementById('upload-preview').style.display = 'block';
+      document.getElementById('upload-placeholder').style.display = 'none';
+      document.getElementById('upload-ok').style.display = 'block';
+      document.getElementById('upload-ok').textContent = '✓ Immagine esistente';
+    }
+    onTypeChange();
+    document.getElementById('modal-overlay').classList.add('open');
   };
 
   // CLOUDINARY UPLOAD
   window.doUpload = async input => {
     const file = input.files[0];
     if (!file) return;
-
-    // Preview locale immediata
     const reader = new FileReader();
     reader.onload = e => {
       document.getElementById('upload-preview').src = e.target.result;
@@ -363,7 +404,6 @@
     };
     reader.readAsDataURL(file);
 
-    // UI loading
     document.getElementById('prog-wrap').style.display = 'block';
     document.getElementById('upload-ok').style.display = 'none';
     document.getElementById('btn-save').disabled = true;
@@ -379,7 +419,7 @@
       const fd = new FormData();
       fd.append('file', file);
       fd.append('upload_preset', PRESET);
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, {method:'POST',body:fd});
+      const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, {method:'POST',body:fd});
       const json = await res.json();
       clearInterval(iv);
       document.getElementById('prog-fill').style.width = '100%';
@@ -388,6 +428,7 @@
         document.getElementById('url-preview').textContent = '🔗 '+json.secure_url;
         document.getElementById('url-preview').style.display = 'block';
         document.getElementById('upload-ok').style.display = 'block';
+        document.getElementById('upload-ok').textContent = '✓ Immagine caricata!';
         document.getElementById('prog-label').textContent = '✓ Caricata!';
       } else throw new Error();
     } catch {
@@ -400,11 +441,24 @@
   };
 
   // MODAL
+  let editingKey = null;
+
   window.openModal = () => {
+    editingKey = null;
+    document.getElementById('modal-title').textContent = 'Nuova Slide';
     ['f-tag','f-title','f-body','f-youtubeId'].forEach(id => document.getElementById(id).value='');
     document.getElementById('f-imageUrl').value = '';
     document.getElementById('f-duration').value = '8';
     document.getElementById('f-type').value = 'text';
+    document.getElementById('f-file').value = '';
+    resetUploadUI();
+    document.getElementById('btn-save').disabled = false;
+    document.getElementById('btn-save').textContent = 'Salva';
+    onTypeChange();
+    document.getElementById('modal-overlay').classList.add('open');
+  };
+
+  function resetUploadUI() {
     document.getElementById('upload-preview').style.display = 'none';
     document.getElementById('upload-preview').src = '';
     document.getElementById('upload-placeholder').style.display = 'block';
@@ -414,12 +468,8 @@
     document.getElementById('prog-label').style.color = 'var(--gold)';
     document.getElementById('upload-ok').style.display = 'none';
     document.getElementById('url-preview').style.display = 'none';
-    document.getElementById('f-file').value = '';
-    document.getElementById('btn-save').disabled = false;
-    document.getElementById('btn-save').textContent = 'Salva';
-    onTypeChange();
-    document.getElementById('modal-overlay').classList.add('open');
-  };
+  }
+
   window.closeModal = () => document.getElementById('modal-overlay').classList.remove('open');
 
   window.onTypeChange = () => {
@@ -438,7 +488,7 @@
       alert('Inserisci l\'ID del video YouTube!'); return;
     }
     const slide = {
-      type, active:true,
+      type, active: true,
       duration: parseInt(document.getElementById('f-duration').value)||8
     };
     if (type!=='video') {
@@ -448,9 +498,17 @@
     }
     if (type==='image') slide.imageUrl  = document.getElementById('f-imageUrl').value;
     if (type==='video') slide.youtubeId = document.getElementById('f-youtubeId').value.trim();
-    await push(ref(db,'signage/slides'), slide);
+
+    if (editingKey) {
+      // mantieni lo stato active originale in modifica
+      slide.active = allData[editingKey]?.active ?? true;
+      await update(ref(db,`signage/slides/${editingKey}`), slide);
+      toast('✓ Slide aggiornata!');
+    } else {
+      await push(ref(db,'signage/slides'), slide);
+      toast('✓ Slide aggiunta!');
+    }
     closeModal();
-    toast('✓ Slide aggiunta!');
   };
 
   function toast(msg) {
