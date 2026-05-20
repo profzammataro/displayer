@@ -24,78 +24,86 @@
     display: flex; flex-direction: column;
   }
 
-  /* HEADER */
+  /* ── HEADER ── */
   header {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 40px 14px;
+    padding: 10px 20px;
     border-bottom: 2px solid var(--gold);
     background: var(--blu2);
     flex-shrink: 0;
+    gap: 12px;
   }
-  .logo-area { display: flex; align-items: center; gap: 16px; }
+  .logo-area { display: flex; align-items: center; gap: 12px; min-width: 0; }
   .logo-circle {
-    width: 52px; height: 52px; border-radius: 50%;
-    border: 2px solid var(--gold);
-    background: var(--blu);
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 2px solid var(--gold); background: var(--blu);
     display: flex; align-items: center; justify-content: center;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px; color: var(--gold); letter-spacing: 1px;
+    font-size: 16px; color: var(--gold); letter-spacing: 1px;
+    flex-shrink: 0;
   }
   .school-name {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px; letter-spacing: 3px; color: var(--white);
-    line-height: 1;
+    font-size: clamp(16px, 3vw, 28px);
+    letter-spacing: 2px; color: var(--white); line-height: 1;
   }
-  .school-sub { font-size: 11px; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; }
+  .school-sub {
+    font-size: clamp(8px, 1.2vw, 11px); color: var(--gray);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .clock-area { text-align: right; flex-shrink: 0; }
   #clock {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 42px; color: var(--gold); letter-spacing: 2px;
+    font-size: clamp(24px, 5vw, 42px);
+    color: var(--gold); letter-spacing: 2px; line-height: 1;
   }
   #date-display {
-    text-align: right; font-size: 12px; color: var(--gray);
+    font-size: clamp(8px, 1.2vw, 12px); color: var(--gray);
     letter-spacing: 1px; text-transform: uppercase;
   }
 
-  /* SLIDE AREA */
+  /* ── SLIDE CONTAINER ── */
   #slide-container {
     flex: 1;
     position: relative;
     overflow: hidden;
+    min-height: 0;
   }
 
   .slide {
     position: absolute; inset: 0;
-    display: flex;
     opacity: 0;
     transition: opacity 0.8s ease;
     pointer-events: none;
+    display: flex;
   }
   .slide.active { opacity: 1; pointer-events: auto; }
 
-  /* Slide tipo: testo */
+  /* ── SLIDE: SOLO TESTO ── */
   .slide-text {
     flex-direction: column;
     align-items: center; justify-content: center;
     text-align: center;
-    padding: 40px 80px;
+    padding: clamp(20px, 4vw, 60px) clamp(20px, 8vw, 100px);
     background: var(--blu);
   }
   .slide-text .tag {
-    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 20px;
+    font-size: clamp(10px, 1.2vw, 13px);
+    letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: clamp(12px, 2vh, 24px);
   }
   .slide-text h2 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 7vw, 96px);
+    font-size: clamp(32px, 7vw, 96px);
     line-height: 1; color: var(--white);
-    margin-bottom: 24px;
+    margin-bottom: clamp(12px, 2vh, 24px);
   }
   .slide-text p {
-    font-size: clamp(16px, 2vw, 24px);
+    font-size: clamp(14px, 2vw, 24px);
     color: var(--gray); max-width: 700px; line-height: 1.6;
   }
 
-  /* Slide tipo: immagine + testo */
+  /* ── SLIDE: IMMAGINE + TESTO (landscape) ── */
   .slide-image {
     flex-direction: row;
   }
@@ -103,34 +111,77 @@
     flex: 1;
     background-size: cover; background-position: center;
     position: relative;
+    min-width: 0;
   }
   .slide-image .img-half::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(to right, transparent 60%, var(--blu));
+    background: linear-gradient(to right, transparent 50%, var(--blu));
   }
   .slide-image .text-half {
     flex: 1;
     display: flex; flex-direction: column;
     justify-content: center;
-    padding: 40px 60px 40px 40px;
+    padding: clamp(16px, 3vw, 48px) clamp(16px, 4vw, 60px);
     background: var(--blu);
+    min-width: 0;
+    overflow: hidden;
   }
   .slide-image .text-half .tag {
-    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 16px;
+    font-size: clamp(9px, 1vw, 12px);
+    letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: clamp(8px, 1.5vh, 18px);
   }
   .slide-image .text-half h2 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(36px, 5vw, 72px);
-    line-height: 1.1; color: var(--white); margin-bottom: 18px;
+    font-size: clamp(28px, 4.5vw, 72px);
+    line-height: 1.05; color: var(--white);
+    margin-bottom: clamp(8px, 1.5vh, 18px);
+    word-break: break-word;
   }
   .slide-image .text-half p {
-    font-size: clamp(14px, 1.6vw, 20px);
+    font-size: clamp(13px, 1.6vw, 22px);
     color: var(--gray); line-height: 1.6;
+    overflow: hidden;
   }
 
-  /* Slide tipo: video YouTube */
+  /* ── PORTRAIT / MOBILE: immagine sopra, testo sotto ── */
+  @media (max-aspect-ratio: 1/1) {
+    .slide-image {
+      flex-direction: column;
+    }
+    .slide-image .img-half {
+      flex: 0 0 45%;
+      width: 100%;
+    }
+    .slide-image .img-half::after {
+      /* gradiente verso il basso invece che verso destra */
+      background: linear-gradient(to bottom, transparent 40%, var(--blu));
+    }
+    .slide-image .text-half {
+      flex: 1;
+      padding: 16px 24px 8px;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+    .slide-image .text-half h2 {
+      font-size: clamp(24px, 6vw, 52px);
+    }
+    .slide-image .text-half p {
+      font-size: clamp(13px, 3.5vw, 20px);
+    }
+    /* testo solo */
+    .slide-text {
+      padding: 24px;
+    }
+    .slide-text h2 { font-size: clamp(28px, 8vw, 60px); }
+    .slide-text p  { font-size: clamp(14px, 4vw, 22px); }
+    /* orologio compatto */
+    .school-sub { display: none; }
+    #date-display { display: none; }
+  }
+
+  /* ── SLIDE: VIDEO ── */
   .slide-video {
     align-items: center; justify-content: center;
     background: #000;
@@ -139,63 +190,51 @@
     width: 100%; height: 100%; border: none;
   }
 
-  /* PROGRESS BAR */
-  #progress-bar {
-    height: 3px; background: var(--blu2); flex-shrink: 0;
-  }
-  #progress-fill {
-    height: 100%; background: var(--gold);
-    width: 0%; transition: width linear;
-  }
+  /* ── PROGRESS BAR ── */
+  #progress-bar { height: 3px; background: var(--blu2); flex-shrink: 0; }
+  #progress-fill { height: 100%; background: var(--gold); width: 0%; transition: width linear; }
 
-  /* TICKER */
+  /* ── TICKER ── */
   #ticker-bar {
-    background: var(--gold);
-    color: var(--blu);
-    font-size: 15px; font-weight: 700;
-    letter-spacing: 1px;
-    padding: 8px 0;
-    overflow: hidden;
-    flex-shrink: 0;
+    background: var(--gold); color: var(--blu);
+    font-size: clamp(12px, 1.8vw, 16px); font-weight: 700;
+    letter-spacing: 1px; padding: 6px 0;
+    overflow: hidden; flex-shrink: 0;
     display: flex; align-items: center;
   }
   #ticker-label {
-    background: var(--blu);
-    color: var(--gold);
-    padding: 0 20px;
-    font-size: 11px; letter-spacing: 3px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    flex-shrink: 0;
+    background: var(--blu); color: var(--gold);
+    padding: 0 14px;
+    font-size: clamp(9px, 1vw, 11px); letter-spacing: 2px;
+    text-transform: uppercase; white-space: nowrap; flex-shrink: 0;
   }
   #ticker-track {
     display: flex; white-space: nowrap;
     animation: ticker-scroll 30s linear infinite;
   }
-  #ticker-track span { padding: 0 60px; }
+  #ticker-track span { padding: 0 50px; }
   @keyframes ticker-scroll {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
 
-  /* DOTS */
+  /* ── DOTS ── */
   #dots {
-    position: absolute; bottom: 20px; left: 50%;
+    position: absolute; bottom: 12px; left: 50%;
     transform: translateX(-50%);
-    display: flex; gap: 10px; z-index: 10;
+    display: flex; gap: 8px; z-index: 10;
   }
   .dot {
-    width: 8px; height: 8px; border-radius: 50%;
+    width: 7px; height: 7px; border-radius: 50%;
     background: var(--gray); transition: background 0.3s;
   }
   .dot.active { background: var(--gold); }
 
-  /* Decorazione angolo */
   .corner-deco {
     position: absolute; bottom: 0; right: 0;
-    width: 200px; height: 200px;
-    border-top: 2px solid rgba(200,168,75,0.15);
-    border-left: 2px solid rgba(200,168,75,0.15);
+    width: 150px; height: 150px;
+    border-top: 2px solid rgba(200,168,75,0.12);
+    border-left: 2px solid rgba(200,168,75,0.12);
     pointer-events: none;
   }
 
@@ -204,7 +243,7 @@
     align-items: center; justify-content: center;
     height: 100%; color: var(--gray);
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px; letter-spacing: 4px;
+    font-size: clamp(18px, 4vw, 32px); letter-spacing: 4px;
   }
 </style>
 </head>
@@ -218,7 +257,7 @@
       <div class="school-sub">Roma · Informazioni & Comunicazioni</div>
     </div>
   </div>
-  <div>
+  <div class="clock-area">
     <div id="clock">00:00:00</div>
     <div id="date-display">—</div>
   </div>
@@ -234,10 +273,12 @@
 
 <div id="ticker-bar">
   <div id="ticker-label">📢 Comunicazioni</div>
-  <div id="ticker-track"><span id="ticker-text">—</span><span id="ticker-text2">—</span></div>
+  <div id="ticker-track">
+    <span id="ticker-text">—</span>
+    <span id="ticker-text2">—</span>
+  </div>
 </div>
 
-<!-- Firebase -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -253,24 +294,20 @@
   };
 
   const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+  const db  = getDatabase(app);
 
-  // ——— OROLOGIO ———
+  // OROLOGIO
   function updateClock() {
     const now = new Date();
-    document.getElementById('clock').textContent =
-      now.toLocaleTimeString('it-IT');
+    document.getElementById('clock').textContent = now.toLocaleTimeString('it-IT');
     document.getElementById('date-display').textContent =
       now.toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
   }
   updateClock();
   setInterval(updateClock, 1000);
 
-  // ——— SLIDE ENGINE ———
-  let slides = [];
-  let currentIndex = 0;
-  let slideTimer = null;
-  let progressTimer = null;
+  // SLIDE ENGINE
+  let slides = [], currentIndex = 0, slideTimer = null;
 
   function buildSlide(data) {
     const div = document.createElement('div');
@@ -301,75 +338,64 @@
   }
 
   function showSlide(index) {
-    const container = document.getElementById('slide-container');
-    const allSlides = container.querySelectorAll('.slide');
-    allSlides.forEach((s, i) => s.classList.toggle('active', i === index));
+    document.querySelectorAll('#slide-container .slide')
+      .forEach((s, i) => s.classList.toggle('active', i === index));
+    document.querySelectorAll('.dot')
+      .forEach((d, i) => d.classList.toggle('active', i === index));
 
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((d, i) => d.classList.toggle('active', i === index));
-
-    // progress bar
     const dur = (slides[index]?.duration || 8) * 1000;
     const fill = document.getElementById('progress-fill');
     fill.style.transition = 'none'; fill.style.width = '0%';
     requestAnimationFrame(() => {
-      fill.style.transition = `width ${dur}ms linear`;
-      fill.style.width = '100%';
+      requestAnimationFrame(() => {
+        fill.style.transition = `width ${dur}ms linear`;
+        fill.style.width = '100%';
+      });
     });
   }
 
   function startCarousel() {
     clearInterval(slideTimer);
-    if (slides.length === 0) return;
-
+    if (!slides.length) return;
     showSlide(currentIndex);
-
     slideTimer = setInterval(() => {
       currentIndex = (currentIndex + 1) % slides.length;
       showSlide(currentIndex);
     }, (slides[currentIndex]?.duration || 8) * 1000);
   }
 
-  function renderSlides(dataArray) {
+  function renderSlides(arr) {
     const container = document.getElementById('slide-container');
-    // rimuovi slide vecchie
     container.querySelectorAll('.slide').forEach(s => s.remove());
     document.getElementById('dots').innerHTML = '';
-    document.getElementById('no-content').style.display =
-      dataArray.length === 0 ? 'flex' : 'none';
+    document.getElementById('no-content').style.display = arr.length ? 'none' : 'flex';
 
-    slides = dataArray;
-    currentIndex = 0;
-
-    slides.forEach((s, i) => {
-      container.insertBefore(buildSlide(s), document.getElementById('dots'));
+    slides = arr; currentIndex = 0;
+    const dotsEl = document.getElementById('dots');
+    slides.forEach(s => {
+      container.insertBefore(buildSlide(s), dotsEl);
       const dot = document.createElement('div');
       dot.className = 'dot';
-      document.getElementById('dots').appendChild(dot);
+      dotsEl.appendChild(dot);
     });
-
     startCarousel();
   }
 
-  // ——— TICKER ———
+  // TICKER
   function setTicker(text) {
-    if (!text) text = '—';
-    document.getElementById('ticker-text').textContent = text;
-    document.getElementById('ticker-text2').textContent = text;
+    const t = text || '—';
+    document.getElementById('ticker-text').textContent = t;
+    document.getElementById('ticker-text2').textContent = t;
   }
 
-  // ——— FIREBASE LISTENER ———
+  // FIREBASE
   onValue(ref(db, 'signage/slides'), snap => {
     const val = snap.val();
-    const arr = val ? Object.values(val).filter(s => s.active !== false) : [];
-    renderSlides(arr);
+    renderSlides(val ? Object.values(val).filter(s => s.active !== false) : []);
   });
+  onValue(ref(db, 'signage/ticker'), snap => setTicker(snap.val()));
 
-  onValue(ref(db, 'signage/ticker'), snap => {
-    setTicker(snap.val() || '—');
-  });
-
-  // ——— AUTO REFRESH ogni 5 min ———
+  // AUTO REFRESH 5 min
   setTimeout(() => location.reload(), 5 * 60 * 1000);
 </script>
 </body>
