@@ -116,57 +116,50 @@
   /* ── SLIDE COMUNICAZIONI ── */
   .slide-com {
     flex-direction:column;
-    padding:clamp(12px,2vw,32px) clamp(16px,3vw,48px);
+    padding:clamp(10px,1.8vw,28px) clamp(14px,2.5vw,42px) clamp(6px,1vh,16px);
     background:var(--blu); overflow:hidden;
   }
   .com-header {
     display:flex; align-items:baseline; gap:16px;
-    margin-bottom:clamp(8px,1.5vh,18px); flex-shrink:0;
+    margin-bottom:clamp(6px,1vh,14px); flex-shrink:0;
   }
   .com-title {
     font-family:'Bebas Neue',sans-serif;
-    font-size:clamp(22px,3.5vw,48px);
+    font-size:clamp(20px,3vw,42px);
     letter-spacing:2px; line-height:1;
   }
   .com-title.sostituz { color:var(--orange); }
   .com-title.ingressi  { color:var(--green); }
   .com-title.cambi     { color:#5bb8ff; }
-  .com-date { font-size:clamp(10px,1.2vw,14px); color:var(--gray); letter-spacing:2px; }
+  .com-date { font-size:clamp(9px,1vw,13px); color:var(--gray); letter-spacing:2px; }
 
-  .com-table { width:100%; border-collapse:collapse; flex:1; }
+  .com-table-wrap { flex:1; overflow:hidden; display:flex; flex-direction:column; min-height:0; }
+  .com-table { width:100%; border-collapse:collapse; table-layout:fixed; }
   .com-table th {
-    font-size:clamp(9px,1vw,12px); letter-spacing:2px; text-transform:uppercase;
+    font-size:0.9em; letter-spacing:2px; text-transform:uppercase;
     color:var(--gray); border-bottom:1px solid #223;
-    padding:clamp(4px,0.8vh,10px) clamp(6px,1vw,14px); text-align:left; font-weight:400;
+    padding:0.3em 0.6em; text-align:left; font-weight:400;
   }
   .com-table td {
-    font-size:clamp(11px,1.4vw,18px);
-    padding:clamp(4px,0.8vh,10px) clamp(6px,1vw,14px);
+    padding:0.3em 0.6em;
     border-bottom:1px solid rgba(255,255,255,0.05);
-    vertical-align:middle;
+    vertical-align:middle; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
   }
   .com-table tr:last-child td { border-bottom:none; }
   .com-table .classe-cell {
     font-family:'Bebas Neue',sans-serif;
-    font-size:clamp(14px,2vw,26px);
-    letter-spacing:1px;
+    font-size:1.3em; letter-spacing:1px;
   }
   .com-table .docente-cell { color:var(--gold); font-weight:700; }
   .com-table .aula-cell {
-    background:rgba(200,168,75,0.1);
-    border-radius:4px; padding:2px 8px;
+    background:rgba(200,168,75,0.15);
+    border-radius:4px; padding:1px 7px;
     font-weight:700; color:var(--gold);
-    display:inline-block; font-size:clamp(10px,1.2vw,15px);
+    display:inline-block; font-size:0.9em;
   }
   .com-table .ora-cell {
     font-family:'Bebas Neue',sans-serif;
-    font-size:clamp(14px,2vw,28px); color:var(--white);
-  }
-  .com-empty {
-    color:var(--gray); font-size:clamp(14px,2vw,22px);
-    text-align:center; margin-top:40px; flex:1;
-    display:flex; align-items:center; justify-content:center;
-    letter-spacing:2px;
+    font-size:1.4em; color:var(--white);
   }
 
   /* PORTRAIT */
@@ -419,18 +412,29 @@
     const rows = cfg.rows.slice(0, maxRows);
     const extra = cfg.rows.length - maxRows;
 
+    // tutte le righe, nessun limite — il font si adatta
+    const allRows = cfg.rows;
+    const nRows   = allRows.length;
+
     div.innerHTML = `
       <div class="com-header">
         <div class="com-title ${cfg.cls}">${cfg.title}</div>
         <div class="com-date">${dateStr}</div>
-        ${extra > 0 ? `<div class="com-date" style="color:var(--orange)">+${extra} altre</div>` : ''}
       </div>
-      <table class="com-table">
-        <thead><tr>${cfg.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
-        <tbody>
-          ${rows.map(r=>`<tr>${cfg.cells(r).map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
-        </tbody>
-      </table>`;
+      <div class="com-table-wrap">
+        <table class="com-table">
+          <thead><tr>${cfg.headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+          <tbody>
+            ${allRows.map(r=>`<tr>${cfg.cells(r).map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+
+    // Auto-scala il font in base al numero di righe
+    // base: 16px per 6 righe, scala linearmente
+    const basePx  = Math.max(10, Math.min(18, Math.floor(108 / (nRows + 2))));
+    div.style.fontSize = basePx + 'px';
+
     return div;
   }
 
