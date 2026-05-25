@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liceo Labriola – Display</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blu: #0a1628;
+    --blu2: #112244;
+    --gold: #c8a84b;
+    --white: #f0f4ff;
+    --gray: #8899bb;
+    --green: #2ecc71;
+    --orange: #e67e22;
+    --red: #e74c3c;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:var(--blu); color:var(--white);
+    font-family:'Lato',sans-serif;
+    width:100vw;
+    height:100vh;        /* fallback browser vecchi */
+    height:100dvh;       /* dynamic viewport: esclude barre browser/LIM */
+    overflow:hidden; display:flex; flex-direction:column;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:8px 20px;
+    border-bottom:2px solid var(--gold);
+    background:var(--blu2);
+    flex-shrink:0; gap:12px;
+  }
+  .logo-area { display:flex; align-items:center; gap:12px; min-width:0; }
+  .logo-area img { height:42px; width:42px; object-fit:contain; border-radius:4px; flex-shrink:0; }
+  .school-name {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(14px,2.8vw,26px);
+    letter-spacing:2px; color:var(--white); line-height:1;
+  }
+  .school-sub { font-size:clamp(8px,1.1vw,10px); color:var(--gray); letter-spacing:1px; text-transform:uppercase; }
+
+  /* COUNTDOWN nell'header */
+  #countdown-box {
+    display:flex; flex-direction:column; align-items:center;
+    background:rgba(200,168,75,0.12);
+    border:1px solid rgba(200,168,75,0.35);
+    border-radius:8px; padding:4px 14px;
+    flex-shrink:0;
+  }
+  #countdown-label { font-size:clamp(7px,0.9vw,10px); color:var(--gold); letter-spacing:2px; text-transform:uppercase; }
+  #countdown-value {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(18px,3vw,32px);
+    color:var(--gold); letter-spacing:1px; line-height:1;
+  }
+  #countdown-sub { font-size:clamp(7px,0.8vw,9px); color:var(--gray); letter-spacing:1px; }
+
+  .clock-area { text-align:right; flex-shrink:0; }
+  #clock {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(22px,4.5vw,40px);
+    color:var(--gold); letter-spacing:2px; line-height:1;
+  }
+  #date-display { font-size:clamp(8px,1.1vw,11px); color:var(--gray); letter-spacing:1px; text-transform:uppercase; }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar { height:3px; background:var(--blu2); flex-shrink:0; }
+  #progress-fill { height:100%; background:var(--gold); width:0%; transition:width linear; }
+
+  /* ── SLIDE CONTAINER ── */
+  #slide-container { flex:1; position:relative; overflow:hidden; min-height:0; }
+
+  .slide {
+    position:absolute; inset:0; opacity:0;
+    transition:opacity 0.8s ease; pointer-events:none; display:flex;
+  }
+  .slide.active { opacity:1; pointer-events:auto; }
+
+  /* SOLO TESTO */
+  .slide-text {
+    flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:clamp(20px,4vw,60px) clamp(20px,8vw,100px);
+    background:var(--blu);
+  }
+  .slide-text .tag { font-size:clamp(10px,1.2vw,13px); letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:clamp(10px,2vh,20px); }
+  .slide-text h2 { font-family:'Bebas Neue',sans-serif; font-size:clamp(30px,7vw,90px); line-height:1; color:var(--white); margin-bottom:clamp(10px,2vh,20px); }
+  .slide-text p { font-size:clamp(13px,2vw,22px); color:var(--gray); max-width:700px; line-height:1.6; }
+
+  /* IMMAGINE + TESTO */
+  .slide-image { flex-direction:row; }
+  .slide-image .img-half {
+    flex:0 0 62%;
+    background-size:contain; background-position:center; background-repeat:no-repeat;
+    position:relative; min-width:0;
+  }
+  .slide-image .img-half::after {
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to right, transparent 72%, var(--blu) 100%);
+  }
+  .slide-image .text-half {
+    flex:1; display:flex; flex-direction:column; justify-content:center;
+    padding:clamp(16px,2.5vw,40px) clamp(16px,3.5vw,52px);
+    background:var(--blu); min-width:0; overflow:hidden;
+  }
+  .slide-image .text-half .tag { font-size:clamp(9px,1vw,12px); letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:clamp(8px,1.5vh,16px); }
+  .slide-image .text-half h2 { font-family:'Bebas Neue',sans-serif; font-size:clamp(26px,4.5vw,68px); line-height:1.05; color:var(--white); margin-bottom:clamp(8px,1.5vh,16px); word-break:break-word; }
+  .slide-image .text-half p { font-size:clamp(12px,1.6vw,20px); color:var(--gray); line-height:1.6; overflow:hidden; }
+
+  /* VIDEO */
+  .slide-video { align-items:center; justify-content:center; background:#000; }
+  .slide-video iframe { width:100%; height:100%; border:none; }
+
+  /* ── SLIDE COMUNICAZIONI ── */
+  .slide-com {
+    flex-direction:column;
+    padding:clamp(10px,1.8vw,28px) clamp(14px,2.5vw,42px) clamp(6px,1vh,16px);
+    background:var(--blu); overflow:hidden;
+  }
+  .com-header {
+    display:flex; align-items:baseline; gap:16px;
+    margin-bottom:clamp(6px,1vh,14px); flex-shrink:0;
+  }
+  .com-title {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(20px,3vw,42px);
+    letter-spacing:2px; line-height:1;
+  }
+  .com-title.sostituz { color:var(--orange); }
+  .com-title.ingressi  { color:var(--green); }
+  .com-title.cambi     { color:#5bb8ff; }
+  .com-date { font-size:clamp(9px,1vw,13px); color:var(--gray); letter-spacing:2px; }
+
+  .com-table-wrap { flex:1; overflow:hidden; display:flex; flex-direction:column; min-height:0; }
+  .com-table { width:100%; border-collapse:collapse; }
+  .com-table th {
+    font-size:0.9em; letter-spacing:2px; text-transform:uppercase;
+    color:var(--gray); border-bottom:1px solid #223;
+    padding:0.3em 0.6em; text-align:left; font-weight:400;
+  }
+  .com-table td {
+    padding:0.3em 0.6em;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    vertical-align:middle; overflow:hidden; text-overflow:ellipsis;
+  }
+  .com-table tr:last-child td { border-bottom:none; }
+  .com-table .classe-cell {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.3em; letter-spacing:1px;
+  }
+  .com-table .docente-cell { color:var(--gold); font-weight:700; }
+  .com-table .aula-cell {
+    background:rgba(200,168,75,0.15);
+    border-radius:4px; padding:1px 7px;
+    font-weight:700; color:var(--gold);
+    display:inline-block; font-size:0.9em;
+  }
+  .com-table .ora-cell {
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.4em; color:var(--white);
+  }
+
+  /* PORTRAIT */
+  @media (max-aspect-ratio: 1/1) {
+    .slide-image { flex-direction:column; }
+    .slide-image .img-half { flex:0 0 42%; width:100%; }
+    .slide-image .img-half::after { background:linear-gradient(to bottom, transparent 40%, var(--blu)); }
+    .slide-image .text-half { flex:1; padding:14px 20px 8px; justify-content:flex-start; overflow-y:auto; }
+    .slide-image .text-half h2 { font-size:clamp(22px,6vw,48px); }
+    .slide-image .text-half p  { font-size:clamp(12px,3.5vw,18px); }
+    .slide-text { padding:20px; }
+    .slide-text h2 { font-size:clamp(26px,8vw,56px); }
+    .slide-text p  { font-size:clamp(13px,4vw,20px); }
+    .school-sub { display:none; }
+    #date-display { display:none; }
+    #countdown-sub { display:none; }
+    .com-table th, .com-table td { padding:4px 8px; }
+  }
+
+  /* DOTS */
+  #dots { position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:10; }
+  .dot { width:7px; height:7px; border-radius:50%; background:var(--gray); transition:background 0.3s; }
+  .dot.active { background:var(--gold); }
+  .dot.com-dot { background:#334; }
+  .dot.com-dot.active { background:var(--orange); }
+
+  .corner-deco {
+    position:absolute; bottom:0; right:0; width:120px; height:120px;
+    border-top:2px solid rgba(200,168,75,0.1); border-left:2px solid rgba(200,168,75,0.1);
+    pointer-events:none;
+  }
+
+  /* TICKER */
+  #ticker-bar {
+    background:var(--gold); color:var(--blu);
+    font-size:clamp(12px,1.8vw,16px); font-weight:700;
+    letter-spacing:1px; padding:6px 0;
+    overflow:hidden; flex-shrink:0; display:flex; align-items:center;
+  }
+  #ticker-label {
+    background:var(--blu); color:var(--gold);
+    padding:0 14px; font-size:clamp(8px,0.9vw,10px);
+    letter-spacing:2px; text-transform:uppercase; white-space:nowrap; flex-shrink:0;
+  }
+  #ticker-track { display:flex; white-space:nowrap; animation:ticker-scroll 35s linear infinite; }
+  #ticker-track span { padding:0 50px; }
+  @keyframes ticker-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  #no-content {
+    display:flex; align-items:center; justify-content:center;
+    height:100%; color:var(--gray);
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(16px,3vw,28px); letter-spacing:4px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <img src="logo_labriola.jpg" alt="Liceo Labriola">
+    <div>
+      <div class="school-name">Liceo Labriola</div>
+      <div class="school-sub">Roma · Informazioni & Comunicazioni</div>
+    </div>
+  </div>
+
+  <!-- COUNTDOWN FINE ANNO -->
+  <div id="countdown-box">
+    <div id="countdown-label">Fine anno</div>
+    <div id="countdown-value">—</div>
+    <div id="countdown-sub">all'ultimo giorno</div>
+  </div>
+
+  <div class="clock-area">
+    <div id="clock">00:00:00</div>
+    <div id="date-display">—</div>
+  </div>
+</header>
+
+<div id="progress-bar"><div id="progress-fill"></div></div>
+
+<div id="slide-container">
+  <div id="no-content">Nessun contenuto disponibile</div>
+  <div id="dots"></div>
+  <div class="corner-deco"></div>
+</div>
+
+<div id="ticker-bar">
+  <div id="ticker-label">📢 Comunicazioni</div>
+  <div id="ticker-track">
+    <span id="ticker-text">—</span>
+    <span id="ticker-text2">—</span>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDNDrCcZ8O9xdSgMDxjZscG2q2MQ-8ShRw",
+    authDomain: "displayer-2b20c.firebaseapp.com",
+    databaseURL: "https://displayer-2b20c-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "displayer-2b20c",
+    storageBucket: "displayer-2b20c.firebasestorage.app",
+    messagingSenderId: "406579948319",
+    appId: "1:406579948319:web:910abf919d89c7c4d99e2a"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
+
+  // ── OROLOGIO ──
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent = now.toLocaleTimeString('it-IT');
+    document.getElementById('date-display').textContent =
+      now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // ── COUNTDOWN FINE ANNO (lunedì 8 giugno 2026) ──
+  const FINE_ANNO = new Date('2026-06-08T08:00:00');
+  function updateCountdown() {
+    const now  = new Date();
+    const diff = FINE_ANNO - now;
+    const box  = document.getElementById('countdown-box');
+    const val  = document.getElementById('countdown-value');
+    const lbl  = document.getElementById('countdown-label');
+    const sub  = document.getElementById('countdown-sub');
+
+    if (diff <= 0) {
+      lbl.textContent = '🎉 Ultimo giorno';
+      val.textContent = 'È oggi!';
+      sub.textContent = 'Buona estate!';
+      box.style.borderColor = 'rgba(46,204,113,0.6)';
+      box.style.background  = 'rgba(46,204,113,0.12)';
+      val.style.color = 'var(--green)';
+      lbl.style.color = 'var(--green)';
+      return;
+    }
+    const days  = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const mins  = Math.floor((diff % (1000*60*60)) / (1000*60));
+
+    if (days > 0) {
+      val.textContent = days === 1 ? '1 giorno' : `${days} giorni`;
+      sub.textContent = `${hours}h ${mins}m restanti`;
+    } else {
+      val.textContent = `${hours}h ${mins}m`;
+      sub.textContent = 'al suono della campanella';
+    }
+    // colore in base ai giorni rimasti
+    const hue = days <= 5  ? 'var(--red)'    :
+                days <= 14 ? 'var(--orange)'  : 'var(--gold)';
+    val.style.color = hue;
+    lbl.style.color = hue;
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  // ── SLIDE ENGINE ──
+  let firebaseSlides = [];   // slide da Firebase
+  let comSlides      = [];   // slide dalle comunicazioni
+  let allSlides      = [];   // merge finale
+  let currentIndex   = 0;
+  let slideTimer     = null;
+
+  function buildFirebaseSlide(data) {
+    const div = document.createElement('div');
+    div.className = 'slide';
+    if (data.type === 'video' && data.youtubeId) {
+      div.classList.add('slide-video');
+      div.innerHTML = `<iframe src="https://www.youtube.com/embed/${data.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${data.youtubeId}&controls=0" allowfullscreen></iframe>`;
+    } else if (data.type === 'image' && data.imageUrl) {
+      div.classList.add('slide-image');
+      div.innerHTML = `
+        <div class="img-half" style="background-image:url('${data.imageUrl}')"></div>
+        <div class="text-half">
+          <div class="tag">${data.tag||'Comunicazione'}</div>
+          <h2>${data.title||''}</h2>
+          <p>${data.body||''}</p>
+        </div>`;
+    } else {
+      div.classList.add('slide-text');
+      div.innerHTML = `
+        <div class="tag">${data.tag||'Comunicazione'}</div>
+        <h2>${data.title||''}</h2>
+        <p>${data.body||''}</p>`;
+    }
+    return div;
+  }
+
+  // ── SLIDE COMUNICAZIONI ──
+  function buildComSlide(type, data, dateStr) {
+    const div = document.createElement('div');
+    div.className = 'slide slide-com';
+    div.dataset.comType = type;
+
+    const configs = {
+      sostituzioni: {
+        title: '📋 Sostituzioni',
+        cls: 'sostituz',
+        icon: '📋',
+        headers: ['Classe','Ora','Aula','Docente'],
+        rows: (data.sostituzioni||[]).filter(r=>r.classe),
+        cells: r => [
+          `<span class="classe-cell">${r.classe}</span>`,
+          `<span class="ora-cell">${r.ora||'—'}</span>`,
+          `<span class="aula-cell">${r.aula||'—'}</span>`,
+          `<span class="docente-cell">${r.docente||'—'}</span>`
+        ]
+      },
+      ingressi: {
+        title: '🚪 Ingressi & Uscite',
+        cls: 'ingressi',
+        icon: '🚪',
+        headers: ['Classe','Ingresso','Uscita','Note','Aula'],
+        rows: (data.ingressi_uscite||[]).filter(r=>r.classe),
+        cells: r => [
+          `<span class="classe-cell">${r.classe}</span>`,
+          r.ingresso||'—',
+          r.uscita  ||'—',
+          r.sostituzione||'—',
+          r.aula ? `<span class="aula-cell">${r.aula}</span>` : '—'
+        ]
+      },
+      cambi: {
+        title: '🔄 Cambi Aula',
+        cls: 'cambi',
+        icon: '🔄',
+        headers: ['Ora','Classe','Nuova Aula','Docente'],
+        rows: (data.cambi_aula||[]).filter(r=>r.classe||r.ora),
+        cells: r => [
+          `<span class="ora-cell">${r.ora||'—'}</span>`,
+          `<span class="classe-cell">${r.classe||'—'}</span>`,
+          `<span class="aula-cell">${r.aula||'—'}</span>`,
+          `<span class="docente-cell">${r.docente||'—'}</span>`
+        ]
+      }
+    };
+
+    const cfg = configs[type];
+    if (!cfg || !cfg.rows.length) return null;
+
+    // Quante righe mostrare in base all'altezza stimata
+    const maxRows = 8;
+    const rows = cfg.rows.slice(0, maxRows);
+    const extra = cfg.rows.length - maxRows;
+
+    const allRows = cfg.rows;
+    const nRows   = allRows.length;
+
+    // Rileva quali colonne hanno almeno un valore non vuoto/trattino
+    const isEmpty = val => !val || val === '—' || val === '-' || val.trim() === '';
+    const activeCols = cfg.headers.map((h, colIdx) => {
+      const hasData = allRows.some(r => {
+        const cellHtml = cfg.cells(r)[colIdx] || '';
+        // estrai testo puro dall'HTML
+        const text = cellHtml.replace(/<[^>]+>/g, '').trim();
+        return !isEmpty(text);
+      });
+      return hasData ? colIdx : null;
+    }).filter(i => i !== null);
+
+    const activeHeaders = activeCols.map(i => cfg.headers[i]);
+
+    // Larghezze fisse per tipo di colonna
+    const colWidthMap = {
+      'ora':        '8%',
+      'classe':     '12%',
+      'aula':       '10%',
+      'nuova aula': '14%',
+      'ingresso':   '14%',
+      'uscita':     '14%',
+      'docente':    '20%',   // compatta: cognome solo
+      'note':       '22%',   // compatta ma leggibile
+    };
+    const finalWidths = activeCols.map(colIdx => {
+      const h = cfg.headers[colIdx].toLowerCase();
+      return colWidthMap[h] || null;
+    });
+    // colonne senza larghezza fissa si dividono il residuo
+    const fixedTotal = finalWidths.filter(w=>w).reduce((s,w)=>s+parseFloat(w),0);
+    const nullCount  = finalWidths.filter(w=>!w).length;
+    const flexWidth  = nullCount > 0 ? ((100 - fixedTotal) / nullCount).toFixed(1) + '%' : null;
+    const resolvedWidths = finalWidths.map(w => w || flexWidth);
+
+    div.innerHTML = `
+      <div class="com-header">
+        <div class="com-title ${cfg.cls}">${cfg.title}</div>
+        <div class="com-date">${dateStr}</div>
+      </div>
+      <div class="com-table-wrap">
+        <table class="com-table" style="table-layout:fixed">
+          <colgroup>${resolvedWidths.map(w=>`<col style="width:${w}">`).join('')}</colgroup>
+          <thead><tr>${activeHeaders.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+          <tbody>
+            ${allRows.map(r => {
+              const cells = cfg.cells(r);
+              return `<tr>${activeCols.map(i=>`<td>${cells[i]}</td>`).join('')}</tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+
+    // Font auto-scalato: più aggressivo, min 13px
+    const basePx = Math.max(13, Math.min(22, Math.floor(120 / (nRows + 2))));
+    div.style.fontSize = basePx + 'px';
+
+    return div;
+  }
+
+  // ── RENDER TUTTE LE SLIDE ──
+  function renderAllSlides() {
+    const container = document.getElementById('slide-container');
+    container.querySelectorAll('.slide').forEach(s=>s.remove());
+    document.getElementById('dots').innerHTML = '';
+
+    allSlides = [...firebaseSlides, ...comSlides];
+    document.getElementById('no-content').style.display = allSlides.length ? 'none' : 'flex';
+    if (!allSlides.length) { clearTimeout(slideTimer); return; }
+
+    const dotsEl = document.getElementById('dots');
+    allSlides.forEach((s, i) => {
+      container.insertBefore(s.el, dotsEl);
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (s.isCom ? ' com-dot' : '');
+      dotsEl.appendChild(dot);
+    });
+
+    currentIndex = Math.min(currentIndex, allSlides.length - 1);
+    startCarousel();
+  }
+
+  function showSlide(index) {
+    document.querySelectorAll('#slide-container .slide')
+      .forEach((s,i) => s.classList.toggle('active', i===index));
+    document.querySelectorAll('.dot')
+      .forEach((d,i) => d.classList.toggle('active', i===index));
+    const dur = (allSlides[index]?.duration || 8) * 1000;
+    const fill = document.getElementById('progress-fill');
+    fill.style.transition = 'none'; fill.style.width = '0%';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      fill.style.transition = `width ${dur}ms linear`;
+      fill.style.width = '100%';
+    }));
+  }
+
+  function startCarousel() {
+    clearTimeout(slideTimer);
+    if (!allSlides.length) return;
+    showSlide(currentIndex);
+
+    function scheduleNext() {
+      const dur = (allSlides[currentIndex]?.duration || 8) * 1000;
+      slideTimer = setTimeout(() => {
+        if (!allSlides.length) return;
+        currentIndex = (currentIndex + 1) % allSlides.length;
+        showSlide(currentIndex);
+        scheduleNext();
+      }, dur);
+    }
+    scheduleNext();
+  }
+
+  // ── FIREBASE SLIDES ──
+  onValue(ref(db,'signage/slides'), snap => {
+    const val = snap.val();
+    const arr = val ? Object.values(val).filter(s=>s.active!==false) : [];
+    firebaseSlides = arr.map(s => ({ el: buildFirebaseSlide(s), duration: s.duration||8, isCom: false }));
+    renderAllSlides();
+  });
+
+  // ── TICKER ──
+  onValue(ref(db,'signage/ticker'), snap => {
+    const t = snap.val() || '—';
+    document.getElementById('ticker-text').textContent  = t;
+    document.getElementById('ticker-text2').textContent = t;
+  });
+
+  // ── COMUNICAZIONI JSON ──
+  const COM_URL = 'https://profzammataro.github.io/orariodoc/comunicazioni.json';
+
+  async function loadComunicazioni() {
+    try {
+      const ts  = Date.now();
+      const res = await fetch(`${COM_URL}?nocache=${ts}`);
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      const dateStr = data.data || '';
+
+      const types  = ['sostituzioni','ingressi','cambi'];
+      const slides = [];
+      types.forEach(type => {
+        const el = buildComSlide(type, data, dateStr);
+        if (el) slides.push({ el, duration: 12, isCom: true });
+      });
+      comSlides = slides;
+      renderAllSlides();
+    } catch(e) {
+      console.warn('Comunicazioni non disponibili:', e);
+      comSlides = [];
+    }
+  }
+
+  loadComunicazioni();
+  // ricarica comunicazioni ogni 30 minuti
+  setInterval(loadComunicazioni, 30 * 60 * 1000);
+
+  // ── AUTO REFRESH 5 MIN ──
+  setTimeout(() => location.reload(), 5 * 60 * 1000);
+</script>
+</body>
+</html>
