@@ -43,22 +43,6 @@
   }
   .school-sub { font-size:clamp(8px,1.1vw,10px); color:var(--gray); letter-spacing:1px; text-transform:uppercase; }
 
-  /* COUNTDOWN nell'header */
-  #countdown-box {
-    display:flex; flex-direction:column; align-items:center;
-    background:rgba(200,168,75,0.12);
-    border:1px solid rgba(200,168,75,0.35);
-    border-radius:8px; padding:4px 14px;
-    flex-shrink:0;
-  }
-  #countdown-label { font-size:clamp(7px,0.9vw,10px); color:var(--gold); letter-spacing:2px; text-transform:uppercase; }
-  #countdown-value {
-    font-family:'Bebas Neue',sans-serif;
-    font-size:clamp(18px,3vw,32px);
-    color:var(--gold); letter-spacing:1px; line-height:1;
-  }
-  #countdown-sub { font-size:clamp(7px,0.8vw,9px); color:var(--gray); letter-spacing:1px; }
-
   .clock-area { text-align:right; flex-shrink:0; }
   #clock {
     font-family:'Bebas Neue',sans-serif;
@@ -184,7 +168,6 @@
     .slide-text p  { font-size:clamp(13px,4vw,20px); }
     .school-sub { display:none; }
     #date-display { display:none; }
-    #countdown-sub { display:none; }
     .com-table th, .com-table td { padding:4px 8px; }
   }
 
@@ -236,13 +219,6 @@
     </div>
   </div>
 
-  <!-- COUNTDOWN FINE ANNO -->
-  <div id="countdown-box">
-    <div id="countdown-label">Fine anno</div>
-    <div id="countdown-value">—</div>
-    <div id="countdown-sub">all'ultimo giorno</div>
-  </div>
-
   <div class="clock-area">
     <div id="clock">00:00:00</div>
     <div id="date-display">—</div>
@@ -291,46 +267,6 @@
   }
   updateClock();
   setInterval(updateClock, 1000);
-
-  // ── COUNTDOWN FINE ANNO (lunedì 8 giugno 2026) ──
-  const FINE_ANNO = new Date('2026-06-08T08:00:00');
-  function updateCountdown() {
-    const now  = new Date();
-    const diff = FINE_ANNO - now;
-    const box  = document.getElementById('countdown-box');
-    const val  = document.getElementById('countdown-value');
-    const lbl  = document.getElementById('countdown-label');
-    const sub  = document.getElementById('countdown-sub');
-
-    if (diff <= 0) {
-      lbl.textContent = '🎉 Ultimo giorno';
-      val.textContent = 'È oggi!';
-      sub.textContent = 'Buona estate!';
-      box.style.borderColor = 'rgba(46,204,113,0.6)';
-      box.style.background  = 'rgba(46,204,113,0.12)';
-      val.style.color = 'var(--green)';
-      lbl.style.color = 'var(--green)';
-      return;
-    }
-    const days  = Math.floor(diff / (1000*60*60*24));
-    const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-    const mins  = Math.floor((diff % (1000*60*60)) / (1000*60));
-
-    if (days > 0) {
-      val.textContent = days === 1 ? '1 giorno' : `${days} giorni`;
-      sub.textContent = `${hours}h ${mins}m restanti`;
-    } else {
-      val.textContent = `${hours}h ${mins}m`;
-      sub.textContent = 'al suono della campanella';
-    }
-    // colore in base ai giorni rimasti
-    const hue = days <= 5  ? 'var(--red)'    :
-                days <= 14 ? 'var(--orange)'  : 'var(--gold)';
-    val.style.color = hue;
-    lbl.style.color = hue;
-  }
-  updateCountdown();
-  setInterval(updateCountdown, 60000);
 
   // ── SLIDE ENGINE ──
   let firebaseSlides = [];   // slide da Firebase
